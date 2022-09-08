@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register"
+    app:startDestination="@id/registerFragment">
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="tossaro.android.auth.app.register.RegisterFragment"
+        android:label="RegisterFragment">
+        <deepLink app:uri="android-app://app.tossaro.dev/register/{country}/{phone}" />
+    </fragment>
+</navigation>
