@@ -1,5 +1,5 @@
 # Kotlin Android Auth
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status] (https://gitlab.com/tossaro/kotlin-android-auth/badges/develop/pipeline.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/develop) [![coverage report](https://gitlab.com/tossaro/kotlin-android-auth/badges/development/coverage.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/develop) [![Latest Release](https://gitlab.com/tossaro/kotlin-android-auth/-/badges/release.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status] (https://gitlab.com/tossaro/kotlin-android-auth/badges/main/pipeline.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/main) [![coverage report](https://gitlab.com/tossaro/kotlin-android-auth/badges/main/coverage.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/main) [![Latest Release](https://gitlab.com/tossaro/kotlin-android-auth/-/badges/release.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/releases)
 Provide base constructor / abstract for simplify code structure.
 Powered by KOIN for dependency injection and using MVVM pattern with clean architecture.
 
