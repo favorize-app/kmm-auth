@@ -1,12 +1,10 @@
 # Kotlin Android Auth
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status](https://gitlab.com/tossaro/kotlin-android-auth/badges/main/pipeline.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/main) [![coverage report](https://gitlab.com/tossaro/kotlin-android-auth/badges/main/coverage.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/commits/main) [![Latest Release](https://gitlab.com/tossaro/kotlin-android-auth/-/badges/release.svg)](https://gitlab.com/tossaro/kotlin-android-auth/-/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status](https://gitlab.com/tossaro/kotlin-multi-platform-auth/badges/main/pipeline.svg)](https://gitlab.com/tossaro/kotlin-multi-platform-auth/-/commits/main) [![coverage report](https://gitlab.com/tossaro/kotlin-multi-platform-auth/badges/main/coverage.svg)](https://gitlab.com/tossaro/kotlin-multi-platform-auth/-/commits/main) [![Latest Release](https://gitlab.com/tossaro/kotlin-multi-platform-auth/-/badges/release.svg)](https://gitlab.com/tossaro/kotlin-multi-platform-auth/-/releases)
 
 ## Features
 - Provide Sign In with multiple provider:
     - Google
     - Facebook
-    - Email
-    - Finger Print
     - Email
     - Phone
 - Provide Verify OTP Dialog
@@ -22,8 +20,8 @@
 - [Architectural Pattern](#architectural-pattern)
 - [Project Structure](#project-structure)
 - [Getting started](#getting-started)
-- [Example](https://gitlab.com/tossaro/kotlin-android-auth/tree/main/example)
-- [Documentation](https://gitlab.com/tossaro/kotlin-android-auth/tree/main/docs)
+- [Example](https://gitlab.com/tossaro/kotlin-multi-platform-auth/tree/main/example)
+- [Documentation](https://gitlab.com/tossaro/kotlin-multi-platform-auth/tree/main/docs)
 - [Development](#development)
 
 ## Requirements
@@ -73,20 +71,20 @@ dependencyResolutionManagement {
    repositories {
       //...
       maven {
-         name = "Auth"
-         url = uri("https://gitlab.com/api/v4/projects/38961532/packages/maven")
-         credentials(HttpHeaderCredentials) {
-            name = 'Private-Token'
-            value = gitlab.consumeToken
-         }
-         authentication {
-            header(HttpHeaderAuthentication)
-         }
-      }
+           name = "Auth"
+            url = uri("https://gitlab.com/api/v4/projects/38961532/packages/maven")
+            credentials(HttpHeaderCredentials) {
+               name = 'Private-Token'
+              value = gitlab.consumeToken
+           }
+           authentication {
+              header(HttpHeaderAuthentication)
+           }
+       }
    }
 }
 ```
-5. Last, add `implementation 'kotlin.android:auth:1.0.0'` inside tag dependencies { . . . } of build.gradle app
+5. Last, add `implementation 'multi.platform.auth:${buildType}:${version}'` inside tag dependencies { . . . } of build.gradle app
 
 ## Development
 Here are some useful gradle/adb commands for executing this example:

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title" translatable="false">Judul</string>
+    <string name="signin" translatable="false">Masuk</string>
+    <string name="signout" translatable="false">Keluar</string>
+</resources>
