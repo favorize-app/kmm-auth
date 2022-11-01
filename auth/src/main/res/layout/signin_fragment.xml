@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="tossaro.android.auth.R" />
+
+        <variable
+            name="vm"
+            type="tossaro.android.auth.app.signin.SignInViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="45dp"
+                android:background="@drawable/bg_button_primary_stroke"
+                android:drawableStart="@drawable/ic_google"
+                android:onClick="@{()->vm.signInByGoogle(context)}"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sign_in_with_google"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="45dp"
+                android:background="@drawable/bg_button_primary_stroke"
+                android:drawableStart="@drawable/ic_facebook"
+                android:onClick="@{()->vm.signInByFacebook()}"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/sign_in_with_facebook"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/btnGoogle" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnFingerPrint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="45dp"
+                android:background="@drawable/bg_button_primary_stroke"
+                android:onClick="@{()->vm.signInFingerprint(context)}"
+                android:text="@string/sign_in_btn_fingerprint"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/btnFacebook" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnToggle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="45dp"
+                android:background="@drawable/bg_button_primary_stroke"
+                android:onClick="@{()->vm.toggleEmailForm()}"
+                android:text="@{context.getString(vm.signInType == `phone` ? R.string.sign_in_with_email : R.string.sign_in_with_phone)}"
+                android:textAllCaps="false"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/btnFingerPrint" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:text="@string/sign_in_or"
+                android:textColor="@color/bodyText"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnToggle" />
+
+            <View
+                android:id="@+id/leftOrLine"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="34dp"
+                android:background="@color/grey60"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOr"
+                app:layout_constraintEnd_toStartOf="@+id/tvOr"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvOr" />
+
+            <View
+                android:id="@+id/rightOrLine"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="34dp"
+                android:background="@color/grey60"
+                app:layout_constraintBottom_toBottomOf="@+id/tvOr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvOr"
+                app:layout_constraintTop_toTopOf="@+id/tvOr" />
+
+            <include
+                android:id="@+id/emailForm"
+                layout="@layout/signin_email_form_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvOr"
+                bind:vm="@{vm}" />
+
+            <include
+                android:id="@+id/phoneForm"
+                layout="@layout/signin_phone_form_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvOr"
+                bind:vm="@{vm}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
