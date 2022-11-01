@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="multi.platform.core.shared.R" />
+
+        <variable
+            name="vm"
+            type="multi.platform.auth.shared.app.otp.OtpDialogViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:fontFamily="@font/poppins_semi_bold"
+            android:text="@string/otp_title"
+            android:textColor="@color/headerText"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/rubik_regular"
+            android:text="@string/otp_sub_title"
+            android:textColor="@color/grey80"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <LinearLayout
+            android:id="@+id/ll_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sub_title">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/rubik_regular"
+                android:text="@string/otp_to_phone"
+                android:textColor="@color/grey80" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/rubik_bold"
+                android:text="@{vm.country + vm.phone}"
+                android:textColor="@color/grey80" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_otp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_phone">
+
+            <EditText
+                android:id="@+id/et_otp1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp1}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_otp2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp2}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_otp3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp3}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_otp4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp4}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_otp5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp5}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_otp6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:autofillHints="@null"
+                android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_white_round8_red : R.drawable.bg_white_round8_grey)}"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/poppins_semi_bold"
+                android:gravity="center"
+                android:hint="@null"
+                android:includeFontPadding="false"
+                android:inputType="phone"
+                android:maxLength="1"
+                android:text="@={vm.otp6}"
+                android:textColor="@color/bodyText"
+                android:textIsSelectable="false"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_otp_error"
+            style="@style/Text.Poppins.Body3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:text="@{vm.otpError}"
+            android:textColor="@color/negative"
+            android:visibility="@{vm.otpError != null &amp;&amp; vm.otpError != `` ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/ll_otp" />
+
+        <LinearLayout
+            android:id="@+id/ll_otp_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:visibility="@{vm.time != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_otp_error">
+
+            <TextView
+                style="@style/Text.Poppins.Body3.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/otp_valid_until"
+                android:textColor="@color/grey80" />
+
+            <TextView
+                style="@style/Text.Poppins.Body3.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@{vm.time}"
+                android:textColor="@color/negative" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_otp_resend"
+            style="@style/Text.Poppins.Body3.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{vm.otpResend}"
+            android:textColor="@color/grey80"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_otp_timer" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="36dp"
+            android:enabled="@{vm.otp1 != null &amp;&amp; vm.otp1.isEmpty() == false &amp;&amp; vm.otp1.trim().isEmpty() == false &amp;&amp; vm.otp2 != null &amp;&amp; vm.otp2.isEmpty() == false &amp;&amp; vm.otp2.trim().isEmpty() == false &amp;&amp; vm.otp3 != null &amp;&amp; vm.otp3.isEmpty() == false &amp;&amp; vm.otp3.trim().isEmpty() == false &amp;&amp; vm.otp4 != null &amp;&amp; vm.otp4.isEmpty() == false &amp;&amp; vm.otp4.trim().isEmpty() == false &amp;&amp; vm.otp5 != null &amp;&amp; vm.otp5.isEmpty() == false &amp;&amp; vm.otp5.trim().isEmpty() == false &amp;&amp; vm.otp6 != null &amp;&amp; vm.otp6.isEmpty() == false &amp;&amp; vm.otp6.trim().isEmpty() == false}"
+            style="@style/MaterialButton.Poppins.SolidPrimary.Rounded"
+            android:text="@string/otp_submit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_otp_resend" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
