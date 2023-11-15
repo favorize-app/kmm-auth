@@ -87,7 +87,6 @@ secret_detection:
 assemble-and-publish:
   stage: build
   tags: ["shell"]
-  needs: ["sast"]
   rules: [!reference [.release_rules, rules]]
   script:
     - ./gradlew assembleStoreDebug publish
