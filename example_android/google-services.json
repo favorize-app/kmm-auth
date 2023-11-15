@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "157772197530",
+    "project_id": "kmm-auth-example",
+    "storage_bucket": "kmm-auth-example.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157772197530:android:b1640fc21620c04b303923",
+        "android_client_info": {
+          "package_name": "multi.platform.auth.example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157772197530-0kd16pi39qr3sahaar21grsstio63m0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzaCg9K16QyZaulFhCMLBuypLBe81Q4Y4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157772197530-0kd16pi39qr3sahaar21grsstio63m0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

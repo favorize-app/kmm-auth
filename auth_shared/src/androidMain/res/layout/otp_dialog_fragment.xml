@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="multi.platform.auth.shared.R" />
+
+        <variable
+            name="vm"
+            type="multi.platform.auth.shared.app.otpdialog.OtpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="22dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round16"
+            android:padding="22dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_title"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/otp_title"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_sub_title"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/otp_sub_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+            <LinearLayout
+                android:id="@+id/ll_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_sub_title">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/otp_to_phone" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{vm.country + vm.phone}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_otp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp1"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp1}"
+                    android:textIsSelectable="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp2"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp2}"
+                    android:textIsSelectable="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp3"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp3}"
+                    android:textIsSelectable="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp4"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp4}"
+                    android:textIsSelectable="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp5"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp5}"
+                    android:textIsSelectable="false" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_otp6"
+                    style="@style/ThemeOverlay.Material3.TextInputEditText"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:autofillHints="@null"
+                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:cursorVisible="false"
+                    android:digits="1234567890"
+                    android:gravity="center"
+                    android:hint="@null"
+                    android:includeFontPadding="false"
+                    android:inputType="phone"
+                    android:maxLength="1"
+                    android:text="@={vm.otp6}"
+                    android:textIsSelectable="false" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_otp_error"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp"
+                android:text="@{vm.otpError}"
+                android:textColor="?attr/colorError"
+                android:visibility="@{vm.otpError != null &amp;&amp; vm.otpError != `` ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/ll_otp" />
+
+            <LinearLayout
+                android:id="@+id/ll_otp_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:visibility="@{vm.time != null ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_otp_error">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/otp_valid_until" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@{vm.time}"
+                    android:textColor="?attr/colorError" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_otp_resend"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{vm.otpResend}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_otp_timer" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_submit"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="36dp"
+                android:enabled="@{vm.otp1 != null &amp;&amp; vm.otp1.trim().isEmpty() == false &amp;&amp; vm.otp2 != null &amp;&amp; vm.otp2.trim().isEmpty() == false &amp;&amp; vm.otp3 != null &amp;&amp; vm.otp3.trim().isEmpty() == false &amp;&amp; vm.otp4 != null &amp;&amp; vm.otp4.trim().isEmpty() == false &amp;&amp; vm.otp5 != null &amp;&amp; vm.otp5.trim().isEmpty() == false &amp;&amp; vm.otp6 != null &amp;&amp; vm.otp6.trim().isEmpty() == false}"
+                android:text="@string/otp_submit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_otp_resend" />
+
+            <include
+                android:id="@+id/loading_view"
+                layout="@layout/loading_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

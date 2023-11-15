@@ -1,0 +1,49 @@
+[versions]
+agp = "8.0.0"
+junit = "4.13.2"
+kotlin = "1.8.22"
+navigation = "2.7.5"
+sonarqube = "4.2.1.3168"
+kover = "0.7.4"
+kmm-core = "1.0.9"
+dokka = "1.9.10"
+biometric = "1.1.0"
+gms-auth = "20.7.0"
+fb = "14.1.0"
+gms = "4.3.14"
+onesignal = "5.0.0"
+firebase = "32.5.0"
+spotless = "6.19.0"
+jacocoToCobertura = "1.1.2"
+coroutines = "1.7.3"
+#noinspection GradleDependency
+mockk = "1.12.5"
+
+[libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
+kmm-core = { module = "multi.platform.core:core_shared", version.ref = "kmm-core" }
+biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+gms-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "gms-auth" }
+fb = { module = "com.facebook.android:facebook-android-sdk", version.ref = "fb" }
+onesignal = { module = "com.onesignal:OneSignal", version.ref = "onesignal" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-common = { module = "io.mockk:mockk-common", version.ref = "mockk" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+gms = { id = "com.google.gms.google-services", version.ref = "gms" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+jacocoToCobertura = { id = "net.razvan.jacoco-to-cobertura", version.ref = "jacocoToCobertura" }
+

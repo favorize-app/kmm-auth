@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Auth" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#5CC2A7</item>
+        <item name="colorPrimaryVariant">#5CC2A7</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#319579</item>
+        <item name="colorSecondaryVariant">#319579</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- For text input fields
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item> -->
+        <!-- For radio buttons
+        <item name="radioButtonStyle">@style/Widget.TipTime.CompoundButton.RadioButton</item> -->
+        <!-- For switches
+        <item name="switchStyle">@style/Widget.TipTime.CompoundButton.Switch</item> -->
+
+        <!-- Additional attributs -->
+        <item name="successColor">#ff669900</item>
+        <item name="errorColor">#ffcc0000</item>
+        <item name="backgroundColor">#ffffff</item>
+        <item name="progressBackgroundColor">#80ffffff</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">always</item>
+    </style>
+</resources>
