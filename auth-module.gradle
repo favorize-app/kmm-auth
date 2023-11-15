@@ -1,0 +1,73 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def authFlavor() {
+    String tskReqStr = getGradle().getStartParameter().getTaskRequests().toString()
+    Pattern pattern = tskReqStr.contains("build") ? Pattern.compile("build(\\w+)(Release|Debug)")
+            : tskReqStr.contains("assemble") ? Pattern.compile("assemble(\\w+)(Release|Debug)")
+            : tskReqStr.contains("bundle") ? Pattern.compile("bundle(\\w+)(Release|Debug)")
+            : tskReqStr.contains("test") ? Pattern.compile("test(\\w+)(Release|Debug)")
+            : tskReqStr.contains("lint") ? Pattern.compile("lint(\\w+)(Release|Debug)")
+            : tskReqStr.contains("koverVerify") ? Pattern.compile("koverVerify(\\w+)(Release|Debug)")
+            : tskReqStr.contains("koverXmlReport") ? Pattern.compile("koverXmlReport(\\w+)(Release|Debug)")
+            : Pattern.compile("generate(\\w+)(Release|Debug)")
+    Matcher matcher = pattern.matcher(tskReqStr)
+    return matcher.find() ? matcher.group(1).toLowerCase() : ""
+}
+
+Properties localProperties = new Properties()
+if (rootProject.file("local.properties").exists()) {
+    localProperties.load(rootProject.file("local.properties").newDataInputStream())
+}
+
+subprojects {
+    afterEvaluate {
+        def currentFlavor = authFlavor()
+        android.productFlavors.all { f ->
+            if (f.name == currentFlavor) {
+                android.defaultConfig {
+                    def flavor = f.name
+                    def scheme = flavor != localProperties.getProperty("mainFlavor") ? "-$flavor" : ""
+                    manifestPlaceholders["fb_app_id"] = localProperties.getProperty("fb_app_id_${f.name}").replace("\"", "")
+                    buildConfigField("String", "FB_APP_ID", localProperties.getProperty("fb_app_id_${flavor}"))
+                    buildConfigField("String", "GOOLE_WEB_CLIENT_ID", localProperties.getProperty("google_web_client_id_${flavor}"))
+                    buildConfigField("String", "AUTH_SERVER", localProperties.getProperty("auth_server_${flavor}"))
+                    buildConfigField("String", "ONESIGNAL_APP_ID", localProperties.getProperty("onesignal_app_id_${flavor}"))
+
+                    resValue("string", "route_auth_sign_in_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/sign-in"
+                    )
+                    resValue("string", "route_auth_sign_in", localProperties.getProperty("host") + "/auth/sign-in")
+                    resValue("string", "route_auth_sign_out_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/sign-out"
+                    )
+                    resValue("string", "route_auth_sign_out", localProperties.getProperty("host") + "/auth/sign-out")
+                    resValue("string", "route_auth_register_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/register/{country}/{phone}/{transactionId}"
+                    )
+                    resValue("string", "route_auth_register", localProperties.getProperty("host") + "/auth/register/{country}/{phone}/{transactionId}")
+                    resValue("string", "route_auth_otp_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/otp/{state}/{country}/{phone}/{duration}/{transactionId}"
+                    )
+                    resValue("string", "route_auth_otp", localProperties.getProperty("host") + "/auth/otp/{state}/{country}/{phone}/{duration}/{transactionId}")
+                    resValue("string", "route_auth_forget_password_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/password/forget"
+                    )
+                    resValue("string", "route_auth_forget_password", localProperties.getProperty("host") + "/auth/password/forget")
+                    resValue("string", "route_auth_error_connection_full",
+                            localProperties.getProperty("scheme") + scheme + "://" +
+                                    localProperties.getProperty("host") + "/auth/error/connection/{key}"
+                    )
+                    resValue("string", "route_auth_error_connection", localProperties.getProperty("host") + "/auth/error/connection/{key}")
+
+                    resValue("string", "country_codes_default_code", localProperties.getProperty("country_codes_default_code"))
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="authConfig"
+            type="multi.platform.auth.shared.external.AuthConfig" />
+
+        <variable
+            name="vm"
+            type="multi.platform.auth.shared.app.signin.SignInViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signin_email"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
+            style="@style/ThemeOverlay.Material3.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:hint="@string/signin_email_hint"
+            android:importantForAutofill="no"
+            android:inputType="textEmailAddress"
+            android:lines="1"
+            android:saveEnabled="false"
+            android:text="@={vm.email}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{vm.emailError != null ? vm.emailError : ``}"
+            android:textColor="?attr/errorColor"
+            android:visibility="@{vm.emailError != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/et_email" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/signin_password"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password"
+            style="@style/ThemeOverlay.Material3.TextInputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:hint="@string/signin_password_hint"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:lines="1"
+            android:saveEnabled="false"
+            android:text="@={vm.password}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{vm.passwordError != null ? vm.passwordError : ``}"
+            android:textColor="?attr/errorColor"
+            android:textSize="12sp"
+            android:visibility="@{vm.passwordError != null ? View.VISIBLE : View.GONE}" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:onClick="@{()->vm.goToForgotPassword()}"
+            android:text="@string/signin_forgot_password"
+            android:visibility="@{authConfig.forgetPasswordApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:enabled="@{vm.email != null &amp;&amp; vm.email.trim().isEmpty() == false &amp;&amp; vm.password != null &amp;&amp; vm.password.trim().isEmpty() == false &amp;&amp; vm.emailError == null &amp;&amp; vm.passwordError == null}"
+            android:onClick="@{()->vm.signInEmail()}"
+            android:text="@string/signin_continue" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mb_submit">
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signin_dont_have_account"
+                android:visibility="@{authConfig.registerApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:onClick="@{()->vm.goToRegister()}"
+                android:text="@string/signin_register"
+                android:visibility="@{authConfig.registerApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+</layout>

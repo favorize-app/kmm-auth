@@ -1,0 +1,41 @@
+repos:
+  - repo: "https://github.com/compilerla/conventional-pre-commit"
+    rev: "v2.4.0"
+    hooks:
+      - id: "conventional-pre-commit"
+        name: "Check commit message"
+        stages: [ "commit-msg" ]
+  - repo: "local"
+    hooks:
+      - id: "spotless-apply"
+        name: "Spotless Apply"
+        description: "Runs spotlessApply"
+        entry: "./gradlew spotlessApply"
+        pass_filenames: false
+        language: "system"
+        stages:
+          - "pre-commit"
+      - id: "spotless-check"
+        name: "Spotless Check"
+        description: "Runs spotLessCheck"
+        entry: "./gradlew spotlessCheck"
+        pass_filenames: false
+        language: "system"
+        stages:
+          - "pre-commit"
+      - id: "lint"
+        name: "Lint"
+        description: "Runs lint"
+        entry: "./gradlew lintStoreDebug"
+        pass_filenames: false
+        language: "system"
+        stages:
+          - "pre-commit"
+      - id: "coverage"
+        name: "Coverage"
+        description: "Runs coverage check"
+        entry: "./gradlew testStoreDebugUnitTest koverVerify"
+        pass_filenames: false
+        language: "system"
+        stages:
+          - "pre-commit"

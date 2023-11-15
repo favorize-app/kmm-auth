@@ -1,96 +1,118 @@
-image: openjdk:11-jdk
-
 variables:
-  ANDROID_COMPILE_SDK: "32"
-  ANDROID_BUILD_TOOLS: "32.0.0"
-  ANDROID_SDK_TOOLS: "8512546"
+  SAST_EXPERIMENTAL_FEATURES: "true"
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+.default_rules:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+
+.release_rules:
+  rules:
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 stages:
   - test
+  - security
   - build
-  - publish
-  - release
-
-.anchors:
-  - &gen-props
-      echo ext { >> properties.gradle
-      && echo gitlab = [ publishToken:"'$TOKEN'",consumeToken:"'$TOKEN'" ] >> properties.gradle
-      && echo deeplink = "'$DEEPLINK'" >> properties.gradle
-      && echo server = [ dev :'"\"'$SERVER'\"",stage:"\"'$SERVER'\"",beta:"\"'$SERVER'\"",store:"\"'$SERVER'\""' ] >> properties.gradle
-      && echo google = [ webClientId = [ dev :'"\"'$GOOGLEWEBID'\"",stage:"\"'$GOOGLEWEBID'\"",beta:"\"'$GOOGLEWEBID'\"",store:"\"'$GOOGLEWEBID'\""' ] ] >> properties.gradle
-      && echo fb = [ appId = [ dev :'"\"'$FBAPPID'\"",stage:"\"'$FBAPPID'\"",beta:"\"'$FBAPPID'\"",store:"\"'$FBAPPID'\""' ] ] >> properties.gradle
-      && echo } >> properties.gradle
+  - distribute
 
 before_script:
-  - apt-get --quiet update --yes
-  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
-  - unzip -d android-sdk-linux android-sdk.zip
-  - mkdir android-sdk-linux/cmdline-tools/latest
-  - mv android-sdk-linux/cmdline-tools/bin android-sdk-linux/cmdline-tools/latest/
-  - mv android-sdk-linux/cmdline-tools/lib android-sdk-linux/cmdline-tools/latest/
-  - mv android-sdk-linux/cmdline-tools/source.properties android-sdk-linux/cmdline-tools/latest/
-  - echo y | android-sdk-linux/cmdline-tools/latest/bin/sdkmanager "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
-  - echo y | android-sdk-linux/cmdline-tools/latest/bin/sdkmanager "platform-tools" >/dev/null
-  - echo y | android-sdk-linux/cmdline-tools/latest/bin/sdkmanager "build-tools;${ANDROID_BUILD_TOOLS}" >/dev/null
-  - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
-  - chmod +x ./gradlew
-  # temporarily disable checking for EPIPE error and use yes to accept all licenses
-  - set +o pipefail
-  - yes | android-sdk-linux/cmdline-tools/latest/bin/sdkmanager --licenses
-  - set -o pipefail
-  - *gen-props
+  - echo token=$TOKEN >> local.properties
+  - echo sonarqubeHost=$SONARQUBE_HOST >> local.properties
+  - echo sonarqubeToken=$SONARQUBE_TOKEN >> local.properties
+  - echo flavors=store >> local.properties
+  - echo mainFlavor=store >> local.properties
+  - echo scheme=$APP_SCHEME >> local.properties
+  - echo host=$HOST >> local.properties
+  - echo fb_app_id_store="\"$FB_APP_ID\"" >> local.properties
+  - echo onesignal_app_id_store="\"$ONESIGNAL_APP_ID\"" >> local.properties
+  - echo google_web_client_id_store="\"$GOOGLE_WEB_CLIENT_ID\"" >> local.properties
+  - echo auth_server_store="\"$AUTH_SERVER_STORE\"" >> local.properties
+  - echo country_codes_default_code=$DEFAULT_COUNTRY_CODE >> local.properties
 
-debugDevTests:
+unit-test:
   stage: test
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH
-      when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+  tags: ["shell"]
+  rules: [!reference [.default_rules, rules]]
   script:
-    - ./gradlew testDevDebugUnitTest createDevDebugCoverageReport
-
-assembleDevDebug:
-  stage: build
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH
-      when: never
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
-  script:
-    - ./gradlew assembleDevDebug
+    - ./gradlew testStoreDebugUnitTest koverXmlReport
   artifacts:
     paths:
-      - exampleAndroid/build/outputs/
+      - auth_shared/build/reports/kover/report.xml
+    reports:
+      junit: auth_shared/build/test-results/testStoreDebugUnitTest/TEST-*.xml
 
-publishing:
-  stage: publish
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+coverage:
+  stage: test
+  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.9
+  needs: ["unit-test"]
+  rules: [!reference [.default_rules, rules]]
+  before_script: null
   script:
-    - ./gradlew publish
-    - echo "TAG=$(./gradlew currentVersion -q -Prelease.quiet)" >> variables.env
+    - paths=`find * -path "auth_shared/src/**/kotlin" -type d | sed -e 's@^@'"$CI_PROJECT_DIR"'/@'`
+    - python /opt/cover2cover.py auth_shared/build/reports/kover/report.xml $paths > cobertura.xml
   artifacts:
+    paths: ["cobertura.xml"]
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: cobertura.xml
+
+mobsf-android-sast:
+  stage: security
+  rules: [!reference [.default_rules, rules]]
+  needs: ["coverage"]
+  before_script: null
+
+mobsf-ios-sast:
+  stage: security
+  rules: [!reference [.default_rules, rules]]
+  needs: ["coverage"]
+  before_script: null
+
+secret_detection:
+  stage: security
+  rules: [!reference [.default_rules, rules]]
+  needs: ["coverage"]
+  before_script: null
+
+assemble-and-publish:
+  stage: build
+  tags: ["shell"]
+  needs: ["sast"]
+  rules: [!reference [.release_rules, rules]]
+  script:
+    - ./gradlew assembleStoreDebug publish
+    - echo "TAG=$(./gradlew buildVersionName -q -Prelease.quiet)" >> variables.env
+  artifacts:
+    paths: ["example_android/build/outputs/"]
     reports:
       dotenv: variables.env
 
+firebase-distribution:
+  stage: distribute
+  environment: Store
+  tags: ["shell"]
+  needs: ["assemble-and-publish"]
+  rules: [!reference [.release_rules, rules]]
+  before_script: ["echo \"Preparing Distribute\""]
+  script:
+    - echo -e "$CI_COMMIT_MESSAGE" > release-notes.txt
+    - firebase appdistribution:distribute example_android/build/outputs/apk/store/debug/example_android-store-debug.apk --app "$FIREBASE_APP_ID" --release-notes-file release-notes.txt --groups "tester" --token "$FIREBASE_TOKEN"
+
 releasing:
-  stage: release
+  stage: distribute
   image: registry.gitlab.com/gitlab-org/release-cli:latest
-  needs:
-    - job: publishing
-      artifacts: true
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  before_script:
-    - echo "preparing release"
+  needs: ["firebase-distribution"]
+  rules: [!reference [.release_rules, rules]]
+  before_script: ["echo \"Preparing Release\""]
   script:
     - release-cli create --name "Release v$TAG" --description "$CI_COMMIT_MESSAGE" --tag-name "v$TAG" --ref "$CI_COMMIT_SHA" || echo "Release v$TAG already exist"
