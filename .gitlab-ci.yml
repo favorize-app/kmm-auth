@@ -44,45 +44,33 @@ unit-test:
   rules: [!reference [.default_rules, rules]]
   script:
     - ./gradlew testStoreDebugUnitTest koverXmlReport
+    - values=$(<auth_shared/build/reports/kover/report.xml tail -7 | head -5 | grep 'INSTRUCTION' | cut -d ' ' -f 3,4 | sed 's/missed="//;s/" covered="/ /;s/"\/>//')
+    - missed=$(<<<$values cut -d ' ' -f 1)
+    - covered=$(<<<$values cut -d ' ' -f 2)
+    - echo "Coverage $(($covered * 100 / ($covered + $missed)))%"
+  coverage: '/Coverage \d+%/'
   artifacts:
     paths:
       - auth_shared/build/reports/kover/report.xml
     reports:
       junit: auth_shared/build/test-results/testStoreDebugUnitTest/TEST-*.xml
 
-coverage:
-  stage: test
-  image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.9
-  needs: ["unit-test"]
-  rules: [!reference [.default_rules, rules]]
-  before_script: null
-  script:
-    - paths=`find * -path "auth_shared/src/**/kotlin" -type d | sed -e 's@^@'"$CI_PROJECT_DIR"'/@'`
-    - python /opt/cover2cover.py auth_shared/build/reports/kover/report.xml $paths > cobertura.xml
-  coverage: '/TOTAL.*\s([.\d]+)%/'
-  artifacts:
-    paths: ["cobertura.xml"]
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: cobertura.xml
-
 mobsf-android-sast:
   stage: security
   rules: [!reference [.default_rules, rules]]
-  needs: ["coverage"]
+  needs: ["unit-test"]
   before_script: null
 
 mobsf-ios-sast:
   stage: security
   rules: [!reference [.default_rules, rules]]
-  needs: ["coverage"]
+  needs: ["unit-test"]
   before_script: null
 
 secret_detection:
   stage: security
   rules: [!reference [.default_rules, rules]]
-  needs: ["coverage"]
+  needs: ["unit-test"]
   before_script: null
 
 assemble-and-publish:
