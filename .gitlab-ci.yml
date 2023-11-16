@@ -99,7 +99,7 @@ firebase-distribution:
 releasing:
   stage: distribute
   image: registry.gitlab.com/gitlab-org/release-cli:latest
-  needs: ["firebase-distribution"]
+  needs: ["assemble-and-publish", "firebase-distribution"]
   rules: [!reference [.release_rules, rules]]
   before_script: ["echo \"Preparing Release\""]
   script:
