@@ -59,6 +59,7 @@ coverage:
   script:
     - paths=`find * -path "auth_shared/src/**/kotlin" -type d | sed -e 's@^@'"$CI_PROJECT_DIR"'/@'`
     - python /opt/cover2cover.py auth_shared/build/reports/kover/report.xml $paths > cobertura.xml
+  coverage: '/TOTAL.*\s([.\d]+)%/'
   artifacts:
     paths: ["cobertura.xml"]
     reports:
