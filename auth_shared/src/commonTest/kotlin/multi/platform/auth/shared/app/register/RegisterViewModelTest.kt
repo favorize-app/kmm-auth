@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import multi.platform.auth.shared.data.user.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.RegisterUseCase
 import kotlin.test.BeforeTest

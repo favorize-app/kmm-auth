@@ -35,7 +35,7 @@ import com.google.android.gms.tasks.Task
 import com.onesignal.OneSignal
 import multi.platform.auth.shared.BuildConfig
 import multi.platform.auth.shared.R
-import multi.platform.auth.shared.data.user.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.databinding.SigninFragmentBinding
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig

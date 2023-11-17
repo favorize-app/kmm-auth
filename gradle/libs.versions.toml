@@ -14,7 +14,6 @@ gms = "4.3.14"
 onesignal = "5.0.0"
 firebase = "32.5.0"
 spotless = "6.19.0"
-jacocoToCobertura = "1.1.2"
 coroutines = "1.7.3"
 #noinspection GradleDependency
 mockk = "1.12.5"
@@ -45,5 +44,4 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-jacocoToCobertura = { id = "net.razvan.jacoco-to-cobertura", version.ref = "jacocoToCobertura" }
 

@@ -5,7 +5,7 @@ import multi.platform.auth.shared.app.otpdialog.OtpViewModel
 import multi.platform.auth.shared.app.register.RegisterViewModel
 import multi.platform.auth.shared.app.signin.SignInViewModel
 import multi.platform.auth.shared.app.signoutdialog.SignOutViewModel
-import multi.platform.auth.shared.data.user.AuthRepositoryImpl
+import multi.platform.auth.shared.data.auth.AuthRepositoryImpl
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.domain.auth.usecase.AuthorizationUseCase
 import multi.platform.auth.shared.domain.auth.usecase.ForgetPasswordUseCase

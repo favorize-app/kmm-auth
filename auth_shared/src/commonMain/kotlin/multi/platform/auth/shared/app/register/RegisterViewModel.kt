@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import multi.platform.auth.shared.data.user.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.RegisterUseCase
 import multi.platform.core.shared.app.common.CoreViewModel

@@ -153,7 +153,7 @@ publishing {
             name = appName
             url = uri("https://gitlab.com/api/v4/projects/${repoId}/packages/maven")
             credentials(HttpHeaderCredentials::class) {
-                name = "Private-Token"
+                name = "Deploy-Token"
                 value = localProperties.getProperty("token")
             }
             authentication {

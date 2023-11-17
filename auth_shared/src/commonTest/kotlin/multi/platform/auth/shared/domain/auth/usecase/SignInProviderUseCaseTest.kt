@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.json.JsonObject
-import multi.platform.auth.shared.data.user.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig

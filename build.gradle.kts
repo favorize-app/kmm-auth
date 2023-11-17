@@ -13,7 +13,6 @@ plugins {
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.kover)
     alias(libs.plugins.spotless)
-    alias(libs.plugins.jacocoToCobertura)
 }
 apply(from = "$rootDir/auth-module.gradle")
 
@@ -72,7 +71,7 @@ sonar {
         property("sonar.token", localProperties.getProperty("sonarqubeToken"))
         property("sonar.host.url", localProperties.getProperty("sonarqubeHost"))
         property("sonar.exclusions", excludes.joinToString(","))
-        property("sonar.coverage.jacoco.xmlReportPaths", "$buildDir/reports/kover/report.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "core_shared/build/reports/kover/report.xml")
         property("sonar.coverage.exclusions", excludes.joinToString(", "))
     }
 }
@@ -98,9 +97,4 @@ subprojects {
     tasks.dokkaGfm {
         outputDirectory.set(rootProject.rootDir.resolve("docs"))
     }
-}
-
-jacocoToCobertura {
-    inputFile.set(File("auth_shared/build/reports/kover/report.xml"))
-    outputFile.set(File("auth_shared/build/reports/kover/cobertura-report.xml"))
 }

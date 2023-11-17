@@ -1,106 +1,18 @@
-variables:
-  SAST_EXPERIMENTAL_FEATURES: "true"
-
 include:
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml
-
-.default_rules:
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
-
-.release_rules:
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-
-stages:
-  - test
-  - security
-  - build
-  - distribute
+  - project: "kotlin-multiplatform-mobile/build-template"
+    ref: main
+    file: "/workflow.yml"
 
 before_script:
-  - echo token=$TOKEN >> local.properties
-  - echo sonarqubeHost=$SONARQUBE_HOST >> local.properties
-  - echo sonarqubeToken=$SONARQUBE_TOKEN >> local.properties
-  - echo flavors=store >> local.properties
-  - echo mainFlavor=store >> local.properties
-  - echo scheme=$APP_SCHEME >> local.properties
-  - echo host=$HOST >> local.properties
+  - !reference [.default, before_script]
   - echo fb_app_id_store="\"$FB_APP_ID\"" >> local.properties
   - echo onesignal_app_id_store="\"$ONESIGNAL_APP_ID\"" >> local.properties
   - echo google_web_client_id_store="\"$GOOGLE_WEB_CLIENT_ID\"" >> local.properties
   - echo auth_server_store="\"$AUTH_SERVER_STORE\"" >> local.properties
   - echo country_codes_default_code=$DEFAULT_COUNTRY_CODE >> local.properties
 
-unit-test:
-  stage: test
-  tags: ["shell"]
-  rules: [!reference [.default_rules, rules]]
-  script:
-    - ./gradlew testStoreDebugUnitTest koverXmlReport
-    - values=$(<auth_shared/build/reports/kover/report.xml tail -7 | head -5 | grep 'INSTRUCTION' | cut -d ' ' -f 3,4 | sed 's/missed="//;s/" covered="/ /;s/"\/>//')
-    - missed=$(<<<$values cut -d ' ' -f 1)
-    - covered=$(<<<$values cut -d ' ' -f 2)
-    - echo "Coverage $(($covered * 100 / ($covered + $missed)))%"
-  coverage: '/Coverage \d+%/'
-  artifacts:
-    paths:
-      - auth_shared/build/reports/kover/report.xml
-    reports:
-      junit: auth_shared/build/test-results/testStoreDebugUnitTest/TEST-*.xml
+distribute-firebase:
+  extends: .distribute-firebase
 
-mobsf-android-sast:
-  stage: security
-  rules: [!reference [.default_rules, rules]]
-  needs: ["unit-test"]
-  before_script: null
-
-mobsf-ios-sast:
-  stage: security
-  rules: [!reference [.default_rules, rules]]
-  needs: ["unit-test"]
-  before_script: null
-
-secret_detection:
-  stage: security
-  rules: [!reference [.default_rules, rules]]
-  needs: ["unit-test"]
-  before_script: null
-
-assemble-and-publish:
-  stage: build
-  tags: ["shell"]
-  rules: [!reference [.release_rules, rules]]
-  script:
-    - ./gradlew assembleStoreDebug publish
-    - echo "TAG=$(./gradlew buildVersionName -q -Prelease.quiet)" >> variables.env
-  artifacts:
-    paths: ["example_android/build/outputs/"]
-    reports:
-      dotenv: variables.env
-
-firebase-distribution:
-  stage: distribute
-  environment: Store
-  tags: ["shell"]
-  needs: ["assemble-and-publish"]
-  rules: [!reference [.release_rules, rules]]
-  before_script: ["echo \"Preparing Distribute\""]
-  script:
-    - echo -e "$CI_COMMIT_MESSAGE" > release-notes.txt
-    - firebase appdistribution:distribute example_android/build/outputs/apk/store/debug/example_android-store-debug.apk --app "$FIREBASE_APP_ID" --release-notes-file release-notes.txt --groups "tester" --token "$FIREBASE_TOKEN"
-
-releasing:
-  stage: distribute
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  needs: ["assemble-and-publish", "firebase-distribution"]
-  rules: [!reference [.release_rules, rules]]
-  before_script: ["echo \"Preparing Release\""]
-  script:
-    - release-cli create --name "Release v$TAG" --description "$CI_COMMIT_MESSAGE" --tag-name "v$TAG" --ref "$CI_COMMIT_SHA" || echo "Release v$TAG already exist"
+tag-release:
+  extends: .tag-release

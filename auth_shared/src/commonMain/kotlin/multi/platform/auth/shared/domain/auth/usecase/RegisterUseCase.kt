@@ -1,6 +1,6 @@
 package multi.platform.auth.shared.domain.auth.usecase
 
-import multi.platform.auth.shared.data.user.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
 
