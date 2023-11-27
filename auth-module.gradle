@@ -7,6 +7,7 @@ def authFlavor() {
             : tskReqStr.contains("assemble") ? Pattern.compile("assemble(\\w+)(Release|Debug)")
             : tskReqStr.contains("bundle") ? Pattern.compile("bundle(\\w+)(Release|Debug)")
             : tskReqStr.contains("test") ? Pattern.compile("test(\\w+)(Release|Debug)")
+            : tskReqStr.contains("connected") ? Pattern.compile("connected(\\w+)(Release|Debug)")
             : tskReqStr.contains("lint") ? Pattern.compile("lint(\\w+)(Release|Debug)")
             : tskReqStr.contains("koverVerify") ? Pattern.compile("koverVerify(\\w+)(Release|Debug)")
             : tskReqStr.contains("koverXmlReport") ? Pattern.compile("koverXmlReport(\\w+)(Release|Debug)")
