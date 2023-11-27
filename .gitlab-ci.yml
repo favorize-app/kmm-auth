@@ -1,2 +1,18 @@
-# The Docker image that will be used to build your app
-image: node
+include:
+  - project: "kotlin-multiplatform-mobile/build-template"
+    ref: main
+    file: "/workflow.yml"
+
+before_script:
+  - !reference [.default, before_script]
+  - echo fb_app_id_store="\"$FB_APP_ID\"" >> local.properties
+  - echo onesignal_app_id_store="\"$ONESIGNAL_APP_ID\"" >> local.properties
+  - echo google_web_client_id_store="\"$GOOGLE_WEB_CLIENT_ID\"" >> local.properties
+  - echo auth_server_store="\"$AUTH_SERVER_STORE\"" >> local.properties
+  - echo country_codes_default_code=$DEFAULT_COUNTRY_CODE >> local.properties
+
+distribute-firebase:
+  extends: .distribute-firebase
+
+tag-release:
+  extends: .tag-release
