@@ -34,14 +34,14 @@ class ForgetPasswordViewModelTest {
         forgetPasswordViewModel.email.value = email
         forgetPasswordViewModel.emailError.value = null
 
-        coEvery { forgetPasswordUseCase(email) } returns mockk()
+        coEvery { forgetPasswordUseCase.call(email) } returns mockk()
 
         // Act
         forgetPasswordViewModel.submit()
         advanceUntilIdle()
 
         // Assert
-        coVerify { forgetPasswordUseCase(email) }
+        coVerify { forgetPasswordUseCase.call(email) }
     }
 
     @Test
@@ -55,7 +55,7 @@ class ForgetPasswordViewModelTest {
         advanceUntilIdle()
 
         // Assert
-        coVerify(exactly = 0) { forgetPasswordUseCase(any()) }
+        coVerify(exactly = 0) { forgetPasswordUseCase.call(any()) }
 
         // Arrange
         forgetPasswordViewModel.email.value = ""
@@ -66,7 +66,7 @@ class ForgetPasswordViewModelTest {
         advanceUntilIdle()
 
         // Assert
-        coVerify(exactly = 0) { forgetPasswordUseCase(any()) }
+        coVerify(exactly = 0) { forgetPasswordUseCase.call(any()) }
     }
 
     @Test
@@ -82,6 +82,6 @@ class ForgetPasswordViewModelTest {
         advanceUntilIdle()
 
         // Assert
-        coVerify(exactly = 0) { forgetPasswordUseCase(any()) }
+        coVerify(exactly = 0) { forgetPasswordUseCase.call(any()) }
     }
 }

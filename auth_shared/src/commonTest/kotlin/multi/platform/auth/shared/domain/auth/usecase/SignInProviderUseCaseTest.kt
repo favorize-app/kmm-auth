@@ -44,7 +44,7 @@ class SignInProviderUseCaseTest {
         coEvery { authConfig.signInMapper(signInResult) } returns signInMappedResult
 
         // Act
-        val result = signInProviderUseCase(authType, token, userReq)
+        val result = signInProviderUseCase.call(authType, token, userReq)
 
         // Assert
         assertEquals(signInMappedResult, result)

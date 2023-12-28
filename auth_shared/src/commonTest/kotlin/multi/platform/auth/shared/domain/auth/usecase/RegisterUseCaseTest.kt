@@ -44,7 +44,7 @@ class RegisterUseCaseTest {
         coEvery { authConfig.registerMapper(registerResult) } returns registerMappedResult
 
         // Act
-        val result = registerUseCase(trxid, userReq, imageBytes, imageName)
+        val result = registerUseCase.call(trxid, userReq, imageBytes, imageName)
 
         // Assert
         assertEquals(registerMappedResult, result)

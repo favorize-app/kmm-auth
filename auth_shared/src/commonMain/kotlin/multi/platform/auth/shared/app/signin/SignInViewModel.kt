@@ -66,7 +66,7 @@ class SignInViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = authorizationUseCase(country.value + phone.value)
+                val response = authorizationUseCase.call(country.value + phone.value)
                 scope.launch {
                     loadingIndicator.value = false
                     onCheckPhone.value = response
@@ -88,7 +88,7 @@ class SignInViewModel(
     private fun validatePhone() {
         scope.launch {
             try {
-                val response = validatePhoneUseCase(country.value + phone.value)
+                val response = validatePhoneUseCase.call(country.value + phone.value)
                 loadingIndicator.value = false
                 onCheckPhone.value = response
             } catch (e: Exception) {
@@ -107,7 +107,7 @@ class SignInViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = signInEmailUseCase(email.value.toString(), password.value.toString())
+                val response = signInEmailUseCase.call(email.value.toString(), password.value.toString())
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -124,7 +124,7 @@ class SignInViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = signInProviderUseCase(authType, accessToken, userReq)
+                val response = signInProviderUseCase.call(authType, accessToken, userReq)
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()

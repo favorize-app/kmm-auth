@@ -56,7 +56,7 @@ class RegisterViewModelTest {
             registerViewModel.password.value,
         )
         val ticket = mockk<Ticket>()
-        coEvery { registerUseCase(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
+        coEvery { registerUseCase.call(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
 
         // Act
         registerViewModel.register(imageBytes, imageName)
@@ -64,7 +64,7 @@ class RegisterViewModelTest {
 
         // Assert
         coVerify {
-            registerUseCase(
+            registerUseCase.call(
                 registerViewModel.transactionId,
                 userReq,
                 imageBytes,
@@ -82,7 +82,7 @@ class RegisterViewModelTest {
         registerViewModel.requirePassword.value = true
 
         val ticket = mockk<Ticket>()
-        coEvery { registerUseCase(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
+        coEvery { registerUseCase.call(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
 
         // Act
         registerViewModel.register(imageBytes, imageName)
@@ -90,7 +90,7 @@ class RegisterViewModelTest {
 
         // Assert
         coVerify(exactly = 0) {
-            registerUseCase(
+            registerUseCase.call(
                 registerViewModel.transactionId,
                 userReq,
                 imageBytes,

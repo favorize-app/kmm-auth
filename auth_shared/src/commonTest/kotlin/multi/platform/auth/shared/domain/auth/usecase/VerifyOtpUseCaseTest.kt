@@ -42,7 +42,7 @@ class VerifyOtpUseCaseTest {
         coEvery { authConfig.verifyOtpMapper(verifyOtpResult) } returns verifyOtpMappedResult
 
         // Act
-        val result = verifyOtpUseCase(otp, type, phone)
+        val result = verifyOtpUseCase.call(otp, type, phone)
 
         // Assert
         assertEquals(verifyOtpMappedResult, result)

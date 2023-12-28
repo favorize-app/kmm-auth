@@ -41,14 +41,14 @@ class OtpViewModelTest {
         otpViewModel.country.value = country
         otpViewModel.phone.value = phone
 
-        coEvery { verifyOtpUseCase(otp, type, country + phone) } returns mockk()
+        coEvery { verifyOtpUseCase.call(otp, type, country + phone) } returns mockk()
 
         // Act
         otpViewModel.verifyOtp(otp)
         advanceUntilIdle()
 
         // Assert
-        coVerify { verifyOtpUseCase(otp, type, country + phone) }
+        coVerify { verifyOtpUseCase.call(otp, type, country + phone) }
     }
 
     @Test
@@ -63,7 +63,7 @@ class OtpViewModelTest {
         otpViewModel.phone.value = phone
 
         val ticket = mockk<Ticket>()
-        coEvery { verifyOtpUseCase(otp, type, country + phone) } returns ticket
+        coEvery { verifyOtpUseCase.call(otp, type, country + phone) } returns ticket
 
         // Act
         otpViewModel.verifyOtp(otp)
@@ -85,7 +85,7 @@ class OtpViewModelTest {
         otpViewModel.phone.value = phone
 
         val ticket = mockk<Ticket>()
-        coEvery { verifyOtpUseCase(otp, type, country + phone) } returns ticket
+        coEvery { verifyOtpUseCase.call(otp, type, country + phone) } returns ticket
 
         // Act
         otpViewModel.verifyOtp(otp)

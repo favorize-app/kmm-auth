@@ -41,7 +41,7 @@ class SignInEmailUseCaseTest {
         coEvery { authConfig.signInMapper(signInResult) } returns signInMappedResult
 
         // Act
-        val result = signInEmailUseCase(email, password)
+        val result = signInEmailUseCase.call(email, password)
 
         // Assert
         assertEquals(signInMappedResult, result)

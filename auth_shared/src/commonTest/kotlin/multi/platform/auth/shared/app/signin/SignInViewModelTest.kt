@@ -47,7 +47,7 @@ class SignInViewModelTest {
         val phone = "1234567890"
         val response = mockk<Ticket>()
 
-        coEvery { authorizationUseCase("$country$phone") } returns response
+        coEvery { authorizationUseCase.call("$country$phone") } returns response
 
         // Act
         signInViewModel.country.value = country
@@ -56,7 +56,7 @@ class SignInViewModelTest {
         advanceUntilIdle()
 
         // Assert
-        coVerify { authorizationUseCase("$country$phone") }
+        coVerify { authorizationUseCase.call("$country$phone") }
         assertEquals(response, signInViewModel.onCheckPhone.value)
     }
 }

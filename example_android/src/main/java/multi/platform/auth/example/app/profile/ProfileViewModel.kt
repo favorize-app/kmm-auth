@@ -22,7 +22,7 @@ class ProfileViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val resp = getProfileUseCase(accessToken, versionName, androidId, playerId)
+                val resp = getProfileUseCase.call(accessToken, versionName, androidId, playerId)
                 _user.value = resp?.user
                 loadingIndicator.value = false
             } catch (e: Exception) {

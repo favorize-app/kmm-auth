@@ -4,11 +4,18 @@ import multi.platform.auth.shared.data.auth.network.request.UserReq
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.enums.AuthType
+import multi.platform.core.shared.domain.common.usecase.CoreUseCase
 
 class SignInProviderUseCase(
     private val authConfig: AuthConfig,
     private val authRepository: AuthRepository,
-) {
-    suspend operator fun invoke(authType: AuthType, token: String, userReq: UserReq?) =
-        authConfig.signInMapper(authRepository.signInProvider(authType, token, userReq))
+) : CoreUseCase {
+    override suspend fun call(vararg args: Any?) =
+        authConfig.signInMapper(
+            authRepository.signInProvider(
+                args[0] as AuthType,
+                args[1] as String,
+                args[2] as? UserReq,
+            ),
+        )
 }

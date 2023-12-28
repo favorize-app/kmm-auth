@@ -71,7 +71,7 @@ class RegisterViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = registerUseCase(transactionId, userReq, imageBytes, imageName)
+                val response = registerUseCase.call(transactionId, userReq, imageBytes, imageName)
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()

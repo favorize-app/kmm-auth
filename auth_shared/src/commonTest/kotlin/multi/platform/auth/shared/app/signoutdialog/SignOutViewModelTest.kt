@@ -35,28 +35,28 @@ class SignOutViewModelTest {
 
     @Test
     fun `signOut should call signOutUseCase and update onSignOut when successful`() = runTest {
-        coEvery { signOutUseCase(accessToken) } returns mockk()
+        coEvery { signOutUseCase.call(accessToken) } returns mockk()
 
         // Act
         signOutViewModel.signOut()
         advanceUntilIdle()
 
         // Assert
-        coVerify { signOutUseCase(accessToken) }
+        coVerify { signOutUseCase.call(accessToken) }
         assertEquals(true, signOutViewModel.onSignOut.value)
     }
 
     @Test
     fun `signOut should update onException when an IOException occurs`() = runTest {
         val exception = IOException("Host not found")
-        coEvery { signOutUseCase(accessToken) } throws exception
+        coEvery { signOutUseCase.call(accessToken) } throws exception
 
         // Act
         signOutViewModel.signOut()
         advanceUntilIdle()
 
         // Assert
-        coVerify { signOutUseCase(accessToken) }
+        coVerify { signOutUseCase.call(accessToken) }
         assertEquals(exception, signOutViewModel.onException.value)
     }
 }

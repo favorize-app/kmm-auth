@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                  = 'auth_shared'
-    spec.version               = '0.3.2'
+    spec.version               = '0.3.3'
     spec.homepage              = 'https://gitlab.com/kotlin-multiplatform-mobile/auth'
     spec.source                = { :git => 'https://gitlab.com/kotlin-multiplatform-mobile/auth.git', :tag => spec.version.to_s }
     spec.license               = { :type => 'MIT', :file => 'LICENSE' }

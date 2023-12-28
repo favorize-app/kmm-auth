@@ -40,7 +40,7 @@ class ForgetPasswordUseCaseTest {
         coEvery { authConfig.forgetPasswordMapper(forgetPasswordResult) } returns forgetPasswordMappedResult
 
         // Act
-        val result = forgetPasswordUseCase(email)
+        val result = forgetPasswordUseCase.call(email)
 
         // Assert
         assertEquals(forgetPasswordMappedResult, result)

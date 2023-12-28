@@ -40,7 +40,7 @@ class ValidatePhoneUseCaseTest {
         coEvery { authConfig.validatePhoneMapper(validatePhoneResult) } returns validatePhoneMappedResult
 
         // Act
-        val result = validatePhoneUseCase(phone)
+        val result = validatePhoneUseCase.call(phone)
 
         // Assert
         assertEquals(validatePhoneMappedResult, result)

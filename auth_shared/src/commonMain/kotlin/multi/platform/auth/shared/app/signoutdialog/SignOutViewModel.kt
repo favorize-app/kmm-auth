@@ -22,7 +22,7 @@ class SignOutViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                signOutUseCase(accessToken)
+                signOutUseCase.call(accessToken)
                 scope.launch {
                     loadingIndicator.value = false
                     onSignOut.value = true

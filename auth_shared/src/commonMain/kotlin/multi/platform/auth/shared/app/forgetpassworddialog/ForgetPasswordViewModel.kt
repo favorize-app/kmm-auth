@@ -25,7 +25,7 @@ class ForgetPasswordViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                forgetPasswordUseCase(email.value!!)
+                forgetPasswordUseCase.call(email.value!!)
                 scope.launch {
                     loadingIndicator.value = false
                     onSubmit.value = true

@@ -40,7 +40,7 @@ class AuthorizationUseCaseTest {
         coEvery { authConfig.signInMapper(authorizationResult) } returns signInResult
 
         // Act
-        val result = authorizationUseCase(phone)
+        val result = authorizationUseCase.call(phone)
 
         // Assert
         assertEquals(signInResult, result)

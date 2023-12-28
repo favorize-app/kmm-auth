@@ -40,7 +40,7 @@ class SignOutUseCaseTest {
         coEvery { authConfig.signOutMapper(signOutResult) } returns signOutMappedResult
 
         // Act
-        val result = signOutUseCase(accessToken)
+        val result = signOutUseCase.call(accessToken)
 
         // Assert
         assertEquals(signOutMappedResult, result)

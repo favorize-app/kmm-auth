@@ -56,7 +56,7 @@ class OtpViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = verifyOtpUseCase(otp, type, country.value + phone.value)
+                val response = verifyOtpUseCase.call(otp, type, country.value + phone.value)
                 if (type == tLogin) {
                     saveTokenLocal(response)
                 } else {
@@ -80,7 +80,7 @@ class OtpViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = authorizationUseCase(country.value + phone.value)
+                val response = authorizationUseCase.call(country.value + phone.value)
                 loadingIndicator.value = false
                 otpError.value = ""
                 onResendOtp.value = response
