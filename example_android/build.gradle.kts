@@ -6,11 +6,11 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.gms)
+    alias(libs.plugins.crashlytics)
     id("androidx.navigation.safeargs.kotlin")
     id("kotlinx-serialization")
 }
 
-val repoId: String by project
 val appId: String by project
 val appName: String by project
 val appVersionName: String by project
@@ -72,7 +72,7 @@ android {
                 resValue(
                     "string",
                     "app_name",
-                    "Auth${if (it != mainFlavour) " (${it.toUpperCaseAsciiOnly()})" else ""}"
+                    "${appName}${if (it != mainFlavour) " (${it.toUpperCaseAsciiOnly()})" else ""}"
                 )
                 resValue(
                     "string",
@@ -100,5 +100,6 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.messaging)
+    implementation(libs.firebase.crashlytics)
     testImplementation(libs.junit)
 }

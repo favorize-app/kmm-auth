@@ -122,7 +122,6 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation(libs.junit)
                 implementation(libs.mockk)
-
             }
         }
         val iosMain by getting {
@@ -139,7 +138,6 @@ publishing {
                 val dependencies =
                     ((asNode()["dependencies"] as NodeList)[0] as Node).value() as NodeList
                 if (dependencies.isNotEmpty()) {
-                    println("count = ${dependencies.size}")
                     dependencies.map { it as Node }.forEach {
                         val scope = (it["scope"] as NodeList)[0] as Node
                         scope.setValue("compile")

@@ -1,16 +1,17 @@
 [versions]
-agp = "8.0.0"
+agp = "8.2.0"
 junit = "4.13.2"
-kotlin = "1.8.22"
+kotlin = "1.9.10"
 navigation = "2.7.6"
 sonarqube = "4.2.1.3168"
 kover = "0.7.4"
-kmm-core = "1.1.13"
+kmm-core = "1.2.0"
 dokka = "1.9.10"
 biometric = "1.1.0"
 gms-auth = "20.7.0"
 fb = "14.1.0"
 gms = "4.4.0"
+crashlytics = "2.9.9"
 onesignal = "5.0.0"
 firebase = "32.7.0"
 spotless = "6.19.0"
@@ -28,6 +29,7 @@ onesignal = { module = "com.onesignal:OneSignal", version.ref = "onesignal" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 mockk-common = { module = "io.mockk:mockk-common", version.ref = "mockk" }
@@ -43,5 +45,6 @@ sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 gms = { id = "com.google.gms.google-services", version.ref = "gms" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 

@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.navigation).apply(false)
     alias(libs.plugins.dokka)
     alias(libs.plugins.gms).apply(false)
+    alias(libs.plugins.crashlytics).apply(false)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.kover)
     alias(libs.plugins.spotless)
@@ -79,11 +80,15 @@ sonar {
 tasks.sonar.dependsOn("koverXmlReport")
 
 tasks.register("buildVersionName") {
+    description = "Generate version name"
+    group = LifecycleBasePlugin.BUILD_TASK_NAME
     val appVersionName: String by project
     println(appVersionName)
 }
 
 tasks.register("installGitHooks", Exec::class) {
+    description = "Install git hooks pre-commit"
+    group = LifecycleBasePlugin.CHECK_TASK_NAME
     commandLine("./scripts/install-git-hooks.sh")
 }
 

@@ -18,7 +18,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-class ExampleApplication : CoreApplication() {
+class ExampleApp : CoreApplication() {
     override fun host() = BuildConfig.AUTH_SERVER
     override fun sharedPrefsName() = "pri0r_m1cr0_h1ght_4uTh"
     override fun appVersion() = getString(R.string.app_version)
