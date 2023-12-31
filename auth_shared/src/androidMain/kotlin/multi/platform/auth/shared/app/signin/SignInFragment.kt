@@ -35,7 +35,7 @@ import com.google.android.gms.tasks.Task
 import com.onesignal.OneSignal
 import multi.platform.auth.shared.BuildConfig
 import multi.platform.auth.shared.R
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.databinding.SigninFragmentBinding
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig
@@ -66,7 +66,7 @@ class SignInFragment : CoreFragment() {
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var otherAuthToken: String
     private var otherAuthType: AuthType? = null
-    private var userReq: UserReq? = null
+    private var userPayload: UserPayload? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -160,8 +160,8 @@ class SignInFragment : CoreFragment() {
                 t?.let { _ ->
                     BiometricUtil(requireContext(), "AndroidKeyStore") { token ->
                         otherAuthToken = token
-                        userReq = null
-                        it.onGetAccessToken(otherAuthType!!, otherAuthToken, userReq)
+                        userPayload = null
+                        it.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
                     }.show()
                 }
                 it.onSignInByBiometricClick.value = null
@@ -262,7 +262,7 @@ class SignInFragment : CoreFragment() {
 
     private fun submit() {
         if (otherAuthType != null) {
-            signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userReq)
+            signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
         } else {
             if (signInViewModel.authType.value == AuthType.EMAIL) {
                 signInViewModel.signInEmail()
@@ -338,9 +338,9 @@ class SignInFragment : CoreFragment() {
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 try {
                     val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                    userReq = UserReq(fullname = account.displayName, email = account.email)
+                    userPayload = UserPayload(fullname = account.displayName, email = account.email)
                     otherAuthToken = account.idToken.toString()
-                    signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userReq)
+                    signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
                 } catch (e: ApiException) {
                     e.printStackTrace()
                     signInViewModel.errorMessage.value = getString(R.string.signin_google_error)
@@ -370,12 +370,12 @@ class SignInFragment : CoreFragment() {
                                     try {
                                         val name = response?.getJSONObject()?.getString("name")
                                         val email = response?.getJSONObject()?.getString("email")
-                                        userReq = UserReq(fullname = name, email = email)
+                                        userPayload = UserPayload(fullname = name, email = email)
                                         otherAuthToken = result.accessToken.toString()
                                         signInViewModel.onGetAccessToken(
                                             otherAuthType!!,
                                             otherAuthToken,
-                                            userReq,
+                                            userPayload,
                                         )
                                     } catch (e: Exception) {
                                         e.printStackTrace()
@@ -402,8 +402,8 @@ class SignInFragment : CoreFragment() {
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && !accessToken.isExpired) {
                 otherAuthToken = accessToken.toString()
-                userReq = null
-                signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userReq)
+                userPayload = null
+                signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
             } else {
                 LoginManager.getInstance()
                     .logInWithReadPermissions(

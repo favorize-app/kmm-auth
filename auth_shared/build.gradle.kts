@@ -162,38 +162,24 @@ publishing {
 }
 
 koverReport {
+    val excs: MutableList<String> by rootProject.extra
     defaults {
         mergeWith("storeDebug")
         verify {
             rule("Minimal line coverage rate in percents") {
-                minBound(33)
+                minBound(45)
             }
         }
     }
     filters {
         excludes {
-            classes(
-                "*Fragment",
-                "*Fragment\$*",
-                "*Activity",
-                "*Activity\$*",
-                "*.databinding.*",
-                "*.BuildConfig"
-            )
+            classes(*excs.toTypedArray())
         }
     }
     androidReports("storeRelease") {
         filters {
             excludes {
-                classes(
-                    "*Fragment",
-                    "*Fragment\$*",
-                    "*Activity",
-                    "*Activity\$*",
-                    "*.databinding.*",
-                    "*.BuildConfig",
-                    "*.DebugUtil"
-                )
+                classes(*excs.toTypedArray())
             }
         }
     }

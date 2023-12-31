@@ -1,6 +1,6 @@
 package multi.platform.auth.shared.domain.auth.usecase
 
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.enums.AuthType
@@ -15,7 +15,7 @@ class SignInProviderUseCase(
             authRepository.signInProvider(
                 args[0] as AuthType,
                 args[1] as String,
-                args[2] as? UserReq,
+                args[2] as? UserPayload,
             ),
         )
 }

@@ -1,6 +1,6 @@
-package multi.platform.auth.shared.data.auth.network.request
+package multi.platform.auth.shared.data.auth.network.payload
 
-data class UserReq(
+data class UserPayload(
     val id: Int = 0,
     val fullname: String? = null,
     val bio: String? = null,

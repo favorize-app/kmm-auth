@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.json.JsonObject
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig
@@ -36,19 +36,19 @@ class SignInProviderUseCaseTest {
         // Arrange
         val authType = AuthType.GOOGLE
         val token = "google_token"
-        val userReq = UserReq(1, "John Doe", "john.doe@example.com", "password123")
+        val userPayload = UserPayload(1, "John Doe", "john.doe@example.com", "password123")
         val signInResult = mockk<JsonObject>()
         val signInMappedResult = mockk<Ticket>()
 
-        coEvery { authRepository.signInProvider(authType, token, userReq) } returns signInResult
+        coEvery { authRepository.signInProvider(authType, token, userPayload) } returns signInResult
         coEvery { authConfig.signInMapper(signInResult) } returns signInMappedResult
 
         // Act
-        val result = signInProviderUseCase.call(authType, token, userReq)
+        val result = signInProviderUseCase.call(authType, token, userPayload)
 
         // Assert
         assertEquals(signInMappedResult, result)
-        coEvery { authRepository.signInProvider(authType, token, userReq) }
+        coEvery { authRepository.signInProvider(authType, token, userPayload) }
         coEvery { authConfig.signInMapper(signInResult) }
     }
 }

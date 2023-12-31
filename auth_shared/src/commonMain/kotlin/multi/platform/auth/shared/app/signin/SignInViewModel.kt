@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.AuthorizationUseCase
 import multi.platform.auth.shared.domain.auth.usecase.SignInEmailUseCase
@@ -120,11 +120,11 @@ class SignInViewModel(
         }
     }
 
-    fun onGetAccessToken(authType: AuthType, accessToken: String, userReq: UserReq?) {
+    fun onGetAccessToken(authType: AuthType, accessToken: String, userPayload: UserPayload?) {
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = signInProviderUseCase.call(authType, accessToken, userReq)
+                val response = signInProviderUseCase.call(authType, accessToken, userPayload)
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -9,7 +9,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.serialization.json.JsonObject
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig
@@ -34,21 +34,21 @@ class RegisterUseCaseTest {
     fun `invoke should call registerMapper with the result of register`() = runTest {
         // Arrange
         val trxid = "123456"
-        val userReq = UserReq(1, "John Doe", "john.doe@example.com", "password123")
+        val userPayload = UserPayload(1, "John Doe", "john.doe@example.com", "password123")
         val imageBytes = byteArrayOf(0x01, 0x02, 0x03)
         val imageName = "profile.jpg"
         val registerResult = mockk<JsonObject>()
         val registerMappedResult = mockk<Ticket>()
 
-        coEvery { authRepository.register(trxid, userReq, imageBytes, imageName) } returns registerResult
+        coEvery { authRepository.register(trxid, userPayload, imageBytes, imageName) } returns registerResult
         coEvery { authConfig.registerMapper(registerResult) } returns registerMappedResult
 
         // Act
-        val result = registerUseCase.call(trxid, userReq, imageBytes, imageName)
+        val result = registerUseCase.call(trxid, userPayload, imageBytes, imageName)
 
         // Assert
         assertEquals(registerMappedResult, result)
-        coEvery { authRepository.register(trxid, userReq, imageBytes, imageName) }
+        coEvery { authRepository.register(trxid, userPayload, imageBytes, imageName) }
         coEvery { authConfig.registerMapper(registerResult) }
     }
 }

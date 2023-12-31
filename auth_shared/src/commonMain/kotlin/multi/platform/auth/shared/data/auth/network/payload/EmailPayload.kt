@@ -1,8 +1,8 @@
-package multi.platform.auth.shared.data.auth.network.request
+package multi.platform.auth.shared.data.auth.network.payload
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class EmailReq(
+data class EmailPayload(
     val email: String? = null,
 )

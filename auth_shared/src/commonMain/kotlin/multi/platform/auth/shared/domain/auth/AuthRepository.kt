@@ -1,7 +1,7 @@
 package multi.platform.auth.shared.domain.auth
 
 import kotlinx.serialization.json.JsonObject
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.external.enums.AuthType
 
 interface AuthRepository {
@@ -17,7 +17,7 @@ interface AuthRepository {
 
     suspend fun register(
         trxid: String,
-        userReq: UserReq,
+        userPayload: UserPayload,
         imageBytes: ByteArray?,
         imageName: String?,
     ): JsonObject?
@@ -30,7 +30,7 @@ interface AuthRepository {
     suspend fun signInProvider(
         authType: AuthType,
         token: String,
-        userReq: UserReq?,
+        userPayload: UserPayload?,
     ): JsonObject?
 
     suspend fun forgetPassword(email: String): JsonObject?

@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.RegisterUseCase
 import multi.platform.core.shared.app.common.CoreViewModel
@@ -57,7 +57,7 @@ class RegisterViewModel(
         ) {
             return
         }
-        val userReq = UserReq(
+        val userPayload = UserPayload(
             0,
             name.value,
             bio.value,
@@ -71,7 +71,7 @@ class RegisterViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = registerUseCase.call(transactionId, userReq, imageBytes, imageName)
+                val response = registerUseCase.call(transactionId, userPayload, imageBytes, imageName)
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()

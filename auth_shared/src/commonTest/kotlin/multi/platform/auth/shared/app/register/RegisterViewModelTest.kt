@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import multi.platform.auth.shared.data.auth.network.request.UserReq
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.RegisterUseCase
 import kotlin.test.BeforeTest
@@ -46,7 +46,7 @@ class RegisterViewModelTest {
         registerViewModel.passwordConfirm.value = "Password@123"
         registerViewModel.requirePassword.value = true
 
-        val userReq = UserReq(
+        val userPayload = UserPayload(
             0,
             registerViewModel.name.value,
             registerViewModel.bio.value,
@@ -56,7 +56,7 @@ class RegisterViewModelTest {
             registerViewModel.password.value,
         )
         val ticket = mockk<Ticket>()
-        coEvery { registerUseCase.call(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
+        coEvery { registerUseCase.call(registerViewModel.transactionId, userPayload, imageBytes, imageName) } returns ticket
 
         // Act
         registerViewModel.register(imageBytes, imageName)
@@ -66,7 +66,7 @@ class RegisterViewModelTest {
         coVerify {
             registerUseCase.call(
                 registerViewModel.transactionId,
-                userReq,
+                userPayload,
                 imageBytes,
                 imageName,
             )
@@ -76,13 +76,13 @@ class RegisterViewModelTest {
     @Test
     fun `register should not call registerUseCase if validation fails`() = runTest {
         // Arrange
-        val userReq = mockk<UserReq>()
+        val userPayload = mockk<UserPayload>()
         registerViewModel.email.value = "wrong-email"
         registerViewModel.password.value = "weak-password"
         registerViewModel.requirePassword.value = true
 
         val ticket = mockk<Ticket>()
-        coEvery { registerUseCase.call(registerViewModel.transactionId, userReq, imageBytes, imageName) } returns ticket
+        coEvery { registerUseCase.call(registerViewModel.transactionId, userPayload, imageBytes, imageName) } returns ticket
 
         // Act
         registerViewModel.register(imageBytes, imageName)
@@ -92,7 +92,7 @@ class RegisterViewModelTest {
         coVerify(exactly = 0) {
             registerUseCase.call(
                 registerViewModel.transactionId,
-                userReq,
+                userPayload,
                 imageBytes,
                 imageName,
             )

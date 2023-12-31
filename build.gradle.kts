@@ -25,7 +25,7 @@ val localProperties = gradleLocalProperties(rootDir)
 
 extra.apply {
     set(
-        "excludes", mutableListOf(
+        "excs", mutableListOf(
             "**/*ViewHolder.*",
             "**/*BottomSheet.*",
             "**/*BottomSheet*",
@@ -49,31 +49,64 @@ extra.apply {
             "**/BuildConfig.*",
             "**/*Component*.*",
             "**/*BR*.*",
+            "*BR",
             "**/Manifest*.*",
             "**/*Lambda$*.*",
-            "**/*Companion*.*",
-            "**/*Module*.*",
-            "**/*Dagger*.*",
-            "**/*Hilt*.*",
-            "**/*MembersInjector*.*",
-            "**/*_MembersInjector.class",
-            "**/*_Factory*.*",
-            "**/*_Provide*Factory*.*",
-            "**/*Extensions*.*"
+            "*ActualKt",
+            "*Format",
+            "*Adapter",
+            "*Payload",
+            "*Payload\$*",
+            "*Response",
+            "*Response\$*",
+            "*ViewHolder",
+            "*ViewHolder\$*",
+            "*KoinKt",
+            "*KoinKt\$*",
+            "*Platform",
+            "*Application",
+            "*Application\$*",
+            "*Fragment",
+            "*Fragment\$*",
+            "*Activity",
+            "*Activity\$*",
+            "*Adapters",
+            "*Adapters\$*",
+            "*Listener",
+            "*Listener\$*",
+            "*Repository",
+            "*Repository\$*",
+            "*Impl",
+            "*Impl\$*",
+            "*Serializer",
+            "*Serializer\$*",
+            "*Config",
+            "*Config\$*",
+            "*Key",
+            "*Key\$*",
+            "*Module",
+            "*Module\$*",
+            "*.databinding.*",
+            "*DataBinding*",
+            "*.BuildConfig",
+            "*.entity.*",
+            "*.constants.*",
+            "*.enums.*",
+            "*.extensions.*",
         )
     )
 }
 
 sonar {
-    val excludes: MutableList<String> by extra
+    val excs: MutableList<String> by extra
     properties {
         property("sonar.projectKey", "kotlin-multi-platform-core")
         property("sonar.projectName", "kotlin-multi-platform-core")
         property("sonar.token", localProperties.getProperty("sonarqubeToken"))
         property("sonar.host.url", localProperties.getProperty("sonarqubeHost"))
-        property("sonar.exclusions", excludes.joinToString(","))
+        property("sonar.exclusions", excs.joinToString(","))
         property("sonar.coverage.jacoco.xmlReportPaths", "core_shared/build/reports/kover/report.xml")
-        property("sonar.coverage.exclusions", excludes.joinToString(", "))
+        property("sonar.coverage.exclusions", excs.joinToString(", "))
     }
 }
 

@@ -15,12 +15,12 @@ import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import kotlinx.serialization.json.JsonObject
-import multi.platform.auth.shared.data.auth.network.request.EmailReq
-import multi.platform.auth.shared.data.auth.network.request.SignInByEmailReq
-import multi.platform.auth.shared.data.auth.network.request.SignInByPhoneReq
-import multi.platform.auth.shared.data.auth.network.request.SigninProviderReq
-import multi.platform.auth.shared.data.auth.network.request.UserReq
-import multi.platform.auth.shared.data.auth.network.request.VerifyOtpReq
+import multi.platform.auth.shared.data.auth.network.payload.EmailPayload
+import multi.platform.auth.shared.data.auth.network.payload.SignInByEmailPayload
+import multi.platform.auth.shared.data.auth.network.payload.SignInByPhonePayload
+import multi.platform.auth.shared.data.auth.network.payload.SigninProviderPayload
+import multi.platform.auth.shared.data.auth.network.payload.UserPayload
+import multi.platform.auth.shared.data.auth.network.payload.VerifyOtpPayload
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.enums.AuthType
@@ -40,14 +40,14 @@ class AuthRepositoryImpl(
         apiClientProvider.client.post(authConfig.signInByPhoneApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
-            setBody(SignInByPhoneReq(phone.replace("+", "")))
+            setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
 
     override suspend fun validatePhone(phone: String): JsonObject? =
         apiClientProvider.client.post(authConfig.validatePhoneApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
-            setBody(SignInByPhoneReq(phone.replace("+", "")))
+            setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
 
     override suspend fun verifyOtp(
@@ -58,12 +58,12 @@ class AuthRepositoryImpl(
         apiClientProvider.client.post(authConfig.verifyOtpApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
-            setBody(VerifyOtpReq(otp, type, phone.replace("+", "")))
+            setBody(VerifyOtpPayload(otp, type, phone.replace("+", "")))
         }.body()
 
     override suspend fun register(
         trxid: String,
-        userReq: UserReq,
+        userPayload: UserPayload,
         imageBytes: ByteArray?,
         imageName: String?,
     ): JsonObject? =
@@ -73,9 +73,9 @@ class AuthRepositoryImpl(
             setBody(
                 MultiPartFormDataContent(
                     formData {
-                        userReq.fullname?.let { append("fullname", it) }
-                        userReq.bio?.let { append("bio", it) }
-                        userReq.email?.let { append("email", it) }
+                        userPayload.fullname?.let { append("fullname", it) }
+                        userPayload.bio?.let { append("bio", it) }
+                        userPayload.email?.let { append("email", it) }
                         imageBytes?.let {
                             append(
                                 "image",
@@ -98,29 +98,29 @@ class AuthRepositoryImpl(
         apiClientProvider.client.post(authConfig.signInByEmailApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
-            setBody(SignInByEmailReq(email, password))
+            setBody(SignInByEmailPayload(email, password))
         }.body()
 
     override suspend fun signInProvider(
         authType: AuthType,
         token: String,
-        userReq: UserReq?,
+        userPayload: UserPayload?,
     ): JsonObject? =
         apiClientProvider.client.post(authConfig.signInByProviderApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
             when (authType) {
                 AuthType.GOOGLE, AuthType.FACEBOOK -> setBody(
-                    SigninProviderReq(
+                    SigninProviderPayload(
                         authType.name,
-                        userReq?.email,
-                        userReq?.fullname,
+                        userPayload?.email,
+                        userPayload?.fullname,
                         token,
                     ),
                 )
 
                 AuthType.BIOMETRIC -> setBody(
-                    SigninProviderReq(provider = authType.name, subscriberAccess = token),
+                    SigninProviderPayload(provider = authType.name, subscriberAccess = token),
                 )
 
                 else -> throw Exception("Undefined auth type")
@@ -131,6 +131,6 @@ class AuthRepositoryImpl(
         apiClientProvider.client.post(authConfig.forgetPasswordApi) {
             host = authConfig.host
             contentType(ContentType.Application.Json)
-            setBody(EmailReq(email))
+            setBody(EmailPayload(email))
         }.body()
 }
