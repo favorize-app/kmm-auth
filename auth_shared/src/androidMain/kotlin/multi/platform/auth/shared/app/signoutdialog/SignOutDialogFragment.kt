@@ -1,6 +1,5 @@
 package multi.platform.auth.shared.app.signoutdialog
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,12 +23,13 @@ import multi.platform.core.shared.external.constants.CommonKey
 import multi.platform.core.shared.external.extensions.goTo
 import multi.platform.core.shared.external.extensions.launchAndCollectIn
 import multi.platform.core.shared.external.extensions.showErrorSnackbar
+import multi.platform.core.shared.external.utilities.Persistent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
 class SignOutDialogFragment : CoreDialogFragment() {
     private val signOutViewModel: SignOutViewModel by viewModel()
-    private val sharedPreferences: SharedPreferences by inject()
+    private val persistent: Persistent by inject()
     private val authConfig: AuthConfig by inject()
 
     private lateinit var binding: SignoutDialogFragmentBinding
@@ -67,7 +67,7 @@ class SignOutDialogFragment : CoreDialogFragment() {
                 onSignOut(ok)
                 it.onSignOut.value = false
             }
-            it.accessToken = sharedPreferences.getString(CommonKey.ACCESS_TOKEN_KEY, null)
+            it.accessToken = persistent.getString(CommonKey.ACCESS_TOKEN_KEY, null)
             it.loadingIndicator.launchAndCollectIn(this, Lifecycle.State.STARTED) { l ->
                 l?.let {
                     binding.loadingView.clLoading.isVisible = l
@@ -111,8 +111,8 @@ class SignOutDialogFragment : CoreDialogFragment() {
 
     private fun onSignOut(ok: Boolean) {
         if (ok) {
-            sharedPreferences.edit().remove(CommonKey.ACCESS_TOKEN_KEY)
-                .remove(CommonKey.REFRESH_TOKEN_KEY).apply()
+            persistent.remove(CommonKey.ACCESS_TOKEN_KEY)
+            persistent.remove(CommonKey.REFRESH_TOKEN_KEY)
             if (BuildConfig.ONESIGNAL_APP_ID.isNotEmpty()) {
                 OneSignal.logout()
             }

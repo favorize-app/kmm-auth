@@ -1,6 +1,5 @@
 package multi.platform.auth.example.app.profile
 
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -23,11 +22,12 @@ import multi.platform.auth.shared.external.constants.AuthKey
 import multi.platform.core.shared.app.common.CoreFragment
 import multi.platform.core.shared.external.constants.CommonKey
 import multi.platform.core.shared.external.extensions.goTo
+import multi.platform.core.shared.external.utilities.Persistent
 import org.koin.core.component.inject
 import timber.log.Timber
 
 class ProfileFragment : CoreFragment() {
-    private val sharedPreferences: SharedPreferences by inject()
+    private val persistent: Persistent by inject()
     private val profileViewModel: ProfileViewModel by inject()
     private lateinit var binding: ProfileFragmentBinding
 
@@ -35,8 +35,8 @@ class ProfileFragment : CoreFragment() {
         super.onCreate(savedInstanceState)
         setFragmentResultListener(AuthKey.SIGN_OUT_KEY) { _, b ->
             if (b.getBoolean(AuthKey.SIGN_OUT_KEY)) {
-                sharedPreferences.edit().remove(CommonKey.ACCESS_TOKEN_KEY)
-                    .remove(CommonKey.REFRESH_TOKEN_KEY).apply()
+                persistent.remove(CommonKey.ACCESS_TOKEN_KEY)
+                persistent.remove(CommonKey.REFRESH_TOKEN_KEY)
                 profileViewModel.clear()
                 onResume()
             }
@@ -71,9 +71,8 @@ class ProfileFragment : CoreFragment() {
         super.onResume()
         val savedStateHandle = findNavController().currentBackStackEntry!!.savedStateHandle
         Timber.d("savedStateHandle = " + savedStateHandle.getLiveData<Boolean>(AuthKey.SIGN_IN_KEY).value.toString())
-        val accessToken = sharedPreferences.getString(CommonKey.ACCESS_TOKEN_KEY, null)
-        profileViewModel.accessToken = accessToken
-        accessToken?.let {
+        profileViewModel.accessToken = persistent.getString(CommonKey.ACCESS_TOKEN_KEY, null)
+        profileViewModel.accessToken?.let {
             val appPackageName = requireContext().packageName
             val pInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requireContext().packageManager?.getPackageInfo(

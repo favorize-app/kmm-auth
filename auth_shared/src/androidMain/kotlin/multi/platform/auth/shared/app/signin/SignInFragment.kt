@@ -2,7 +2,6 @@ package multi.platform.auth.shared.app.signin
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -48,6 +47,7 @@ import multi.platform.core.shared.external.extensions.goTo
 import multi.platform.core.shared.external.extensions.launchAndCollectIn
 import multi.platform.core.shared.external.extensions.showErrorSnackbar
 import multi.platform.core.shared.external.extensions.showToast
+import multi.platform.core.shared.external.utilities.Persistent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 import java.util.UUID
@@ -58,7 +58,7 @@ class SignInFragment : CoreFragment() {
     private val minChar = 9
     private val authConfig: AuthConfig by inject()
     private val signInViewModel: SignInViewModel by viewModel()
-    private val sharedPreferences: SharedPreferences by inject()
+    private val persistent: Persistent by inject()
     private lateinit var binding: SigninFragmentBinding
     private val callbackManager: CallbackManager by lazy {
         CallbackManager.Factory.create()
@@ -281,11 +281,9 @@ class SignInFragment : CoreFragment() {
     private fun onSignedIn(ticket: Ticket?) {
         ticket?.let {
             savedStateHandle[AuthKey.SIGN_IN_KEY] = true
-            sharedPreferences.edit()
-                .putString(CommonKey.ACCESS_TOKEN_KEY, it.session?.token)
-                .putString(CommonKey.REFRESH_TOKEN_KEY, it.session?.refreshToken)
-                .putString(CommonKey.PHONE_KEY, it.session?.msisdn)
-                .apply()
+            it.session?.token?.let { t -> persistent.putString(CommonKey.ACCESS_TOKEN_KEY, t) }
+            it.session?.refreshToken?.let { r -> persistent.putString(CommonKey.REFRESH_TOKEN_KEY, r) }
+            it.session?.msisdn?.let { m -> persistent.putString(CommonKey.PHONE_KEY, m) }
             if (BuildConfig.ONESIGNAL_APP_ID.isNotEmpty()) {
                 OneSignal.login(ticket.session?.id.toString())
                 ticket.session?.email?.let { e ->

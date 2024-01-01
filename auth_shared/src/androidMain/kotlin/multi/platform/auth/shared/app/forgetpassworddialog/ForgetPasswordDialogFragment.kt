@@ -1,6 +1,5 @@
 package multi.platform.auth.shared.app.forgetpassworddialog
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -22,12 +21,13 @@ import multi.platform.core.shared.external.constants.CommonKey
 import multi.platform.core.shared.external.extensions.goTo
 import multi.platform.core.shared.external.extensions.launchAndCollectIn
 import multi.platform.core.shared.external.extensions.showErrorSnackbar
+import multi.platform.core.shared.external.utilities.Persistent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
 class ForgetPasswordDialogFragment : CoreDialogFragment() {
     private val forgetPasswordViewModel: ForgetPasswordViewModel by viewModel()
-    private val sharedPreferences: SharedPreferences by inject()
+    private val persistent: Persistent by inject()
     private val authConfig: AuthConfig by inject()
 
     private lateinit var binding: ForgetPasswordDialogFragmentBinding
@@ -68,7 +68,7 @@ class ForgetPasswordDialogFragment : CoreDialogFragment() {
     private fun setupObserver() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = forgetPasswordViewModel.also {
-            it.accessToken = sharedPreferences.getString(CommonKey.ACCESS_TOKEN_KEY, null)
+            it.accessToken = persistent.getString(CommonKey.ACCESS_TOKEN_KEY, null)
             it.loadingIndicator.launchAndCollectIn(this, Lifecycle.State.STARTED) { l ->
                 l?.let {
                     binding.loadingView.clLoading.isVisible = l
