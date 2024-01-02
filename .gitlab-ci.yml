@@ -10,7 +10,7 @@ before_script:
   - echo onesignal_app_id_store="\"$ONESIGNAL_APP_ID\"" >> local.properties
   - echo google_web_client_id_store="\"$GOOGLE_WEB_CLIENT_ID\"" >> local.properties
   - echo auth_server_store="\"$AUTH_SERVER_STORE\"" >> local.properties
-  - cd example_android && echo $GOOGLE_SERVICES_JSON | base64 --decode > google-services.json
+  - cd example_android && echo $GOOGLE_SERVICES_JSON | base64 --decode > google-services.json && cd ..
 
 distribute-firebase:
   extends: .distribute-firebase
