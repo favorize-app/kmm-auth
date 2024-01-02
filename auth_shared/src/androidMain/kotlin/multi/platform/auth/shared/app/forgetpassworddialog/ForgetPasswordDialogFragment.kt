@@ -83,7 +83,7 @@ class ForgetPasswordDialogFragment : CoreDialogFragment() {
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection_full).replace(
+                        getString(R.string.route_auth_error_connection).replace(
                             "{key}",
                             AuthKey.FORGET_PASSWORD_KEY,
                         ),

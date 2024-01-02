@@ -33,7 +33,6 @@
             android:clickable="false"
             android:drawablePadding="8dp"
             android:focusable="false"
-            android:hint="@string/country_codes_default_code"
             android:importantForAutofill="no"
             android:inputType="textNoSuggestions"
             android:lines="1"

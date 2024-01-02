@@ -10,10 +10,6 @@
         <import type="multi.platform.auth.shared.external.enums.AuthType" />
 
         <variable
-            name="buildConfig"
-            type="multi.platform.auth.shared.BuildConfig" />
-
-        <variable
             name="authConfig"
             type="multi.platform.auth.shared.external.AuthConfig" />
 
@@ -143,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="@{()->vm.signInByGoogle()}"
-                        android:visibility="@{buildConfig.GOOLE_WEB_CLIENT_ID.isEmpty() ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{authConfig.googleWebClientId.isEmpty() ? View.GONE : View.VISIBLE}"
                         app:icon="@drawable/common_google_signin_btn_icon_light"
                         app:iconTint="@null"
                         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:onClick="@{()->vm.signInByFacebook()}"
-                        android:visibility="@{buildConfig.FB_APP_ID.isEmpty() ? View.GONE : View.VISIBLE}"
+                        android:visibility="@{authConfig.fbAppId.isEmpty() ? View.GONE : View.VISIBLE}"
                         app:icon="@drawable/com_facebook_button_icon"
                         app:layout_constraintStart_toEndOf="@id/mb_google"
                         app:layout_constraintTop_toTopOf="parent" />

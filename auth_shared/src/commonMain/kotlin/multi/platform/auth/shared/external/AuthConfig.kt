@@ -7,9 +7,13 @@ interface AuthConfig {
     val rootView: Int
     val logo: Int
     val countryFlag: Int
-    val headerTransactionIdKey: String
+    val countryCode: String
+    val fbAppId: String
+    val googleWebClientId: String
+    val onesignalAppId: String
 
     val host: String
+    val headerTransactionIdKey: String
     val signInByPhoneApi: String
     val signInByEmailApi: String
     val signInByProviderApi: String

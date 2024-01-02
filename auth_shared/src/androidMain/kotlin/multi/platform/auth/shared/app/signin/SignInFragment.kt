@@ -1,6 +1,5 @@
 package multi.platform.auth.shared.app.signin
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +23,7 @@ import com.facebook.FacebookException
 import com.facebook.FacebookSdk
 import com.facebook.GraphRequest
 import com.facebook.LoggingBehavior
+import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -109,13 +109,12 @@ class SignInFragment : CoreFragment() {
 
     private fun setupObserver() {
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.buildConfig = BuildConfig()
         binding.authConfig = authConfig
         binding.vm = signInViewModel.also {
             if (!authConfig.signInByEmailApi.isEmpty()) it.authType.value = AuthType.EMAIL
             if (!authConfig.signInByPhoneApi.isEmpty()) it.authType.value = AuthType.PHONE
 
-            it.country.value = getString(R.string.country_codes_default_code)
+            it.country.value = authConfig.countryCode
             it.errorMinChar = getString(cR.string.error_min_character, minChar)
             it.errorPhoneFormat = getString(cR.string.error_phone_format)
             it.errorEmptyField = getString(cR.string.error_empty_field)
@@ -179,13 +178,13 @@ class SignInFragment : CoreFragment() {
                 this,
                 Lifecycle.State.STARTED,
             ) { g ->
-                g?.let { goTo(getString(R.string.route_auth_forget_password_full)) }
+                g?.let { goTo(getString(R.string.route_auth_forget_password)) }
                 it.onGoToForgetPasswordClick.value = null
             }
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection_full).replace(
+                        getString(R.string.route_auth_error_connection).replace(
                             "{key}",
                             AuthKey.SIGN_IN_KEY,
                         ),
@@ -234,7 +233,7 @@ class SignInFragment : CoreFragment() {
                     )
                 }
                 doOnTextChanged { text, _, _, _ ->
-                    if (signInViewModel.country.value == getString(R.string.country_codes_default_code) && text.toString() == "0") {
+                    if (signInViewModel.country.value == authConfig.countryCode && text.toString() == "0") {
                         binding.phoneForm.etPhone.setText("")
                     }
                 }
@@ -271,9 +270,9 @@ class SignInFragment : CoreFragment() {
     }
 
     private fun goToRegister(country: String, transactionId: String, phone: String? = null) {
-        val routeAuthRegister = getString(R.string.route_auth_register_full)
-            .replace("{country}", country)
-            .replace("{transactionId}", transactionId)
+        val routeAuthRegister =
+            getString(R.string.route_auth_register).replace("{country}", country)
+                .replace("{transactionId}", transactionId)
         phone?.let { routeAuthRegister.replace("{phone}", it) }
         goTo(routeAuthRegister)
     }
@@ -282,9 +281,14 @@ class SignInFragment : CoreFragment() {
         ticket?.let {
             savedStateHandle[AuthKey.SIGN_IN_KEY] = true
             it.session?.token?.let { t -> persistent.putString(CommonKey.ACCESS_TOKEN_KEY, t) }
-            it.session?.refreshToken?.let { r -> persistent.putString(CommonKey.REFRESH_TOKEN_KEY, r) }
+            it.session?.refreshToken?.let { r ->
+                persistent.putString(
+                    CommonKey.REFRESH_TOKEN_KEY,
+                    r,
+                )
+            }
             it.session?.msisdn?.let { m -> persistent.putString(CommonKey.PHONE_KEY, m) }
-            if (BuildConfig.ONESIGNAL_APP_ID.isNotEmpty()) {
+            if (authConfig.onesignalAppId.isNotEmpty()) {
                 OneSignal.login(ticket.session?.id.toString())
                 ticket.session?.email?.let { e ->
                     OneSignal.User.addEmail(e)
@@ -301,8 +305,7 @@ class SignInFragment : CoreFragment() {
     private fun onCheckPhone(ticket: Ticket?) {
         ticket?.let { t ->
             goTo(
-                getString(R.string.route_auth_otp_full)
-                    .replace("{state}", t.state.toString())
+                getString(R.string.route_auth_otp).replace("{state}", t.state.toString())
                     .replace("{country}", signInViewModel.country.value.toString())
                     .replace("{phone}", signInViewModel.phone.value.toString())
                     .replace("{duration}", t.otp?.duration.toString())
@@ -313,15 +316,12 @@ class SignInFragment : CoreFragment() {
 
     private fun onSignInByGoogle(trigger: Boolean?) {
         if (trigger == true) {
-            val googleWebClientId = BuildConfig.GOOLE_WEB_CLIENT_ID
-            if (googleWebClientId.isEmpty()) {
+            if (authConfig.googleWebClientId.isEmpty()) {
                 signInViewModel.toastMessage.value = "Google web client ID not found"
                 return
             }
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(googleWebClientId)
-                .requestEmail()
-                .build()
+                .requestIdToken(authConfig.googleWebClientId).requestEmail().build()
             val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
             val signInIntent = mGoogleSignInClient.signInIntent
             resultGoogleSignIn.launch(signInIntent)
@@ -330,26 +330,23 @@ class SignInFragment : CoreFragment() {
 
     private var resultGoogleSignIn =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
+            try {
                 val data: Intent? = result.data
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
-                try {
-                    val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                    userPayload = UserPayload(fullname = account.displayName, email = account.email)
-                    otherAuthToken = account.idToken.toString()
-                    signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
-                } catch (e: ApiException) {
-                    e.printStackTrace()
-                    signInViewModel.errorMessage.value = getString(R.string.signin_google_error)
-                }
-            } else signInViewModel.errorMessage.value = getString(R.string.signin_google_error)
+                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+                userPayload = UserPayload(fullname = account.displayName, email = account.email)
+                otherAuthToken = account.idToken.toString()
+                signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
+            } catch (e: ApiException) {
+                e.printStackTrace()
+                signInViewModel.errorMessage.value = getString(R.string.signin_google_error)
+            }
         }
 
     private fun onSignInByFacebook(trigger: Boolean?) {
         if (trigger == true) {
-            val fbAppId = BuildConfig.FB_APP_ID
-            if (fbAppId.isEmpty()) {
+            if (authConfig.fbAppId.isEmpty()) {
                 signInViewModel.toastMessage.value = "Facebook app ID not found"
                 return
             }
@@ -358,58 +355,62 @@ class SignInFragment : CoreFragment() {
                 FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
             }
 
-            LoginManager.getInstance()
-                .registerCallback(
-                    callbackManager,
-                    object : FacebookCallback<LoginResult> {
-                        override fun onSuccess(result: LoginResult) {
-                            val request =
-                                GraphRequest.newMeRequest(result.accessToken) { _, response ->
-                                    try {
-                                        val name = response?.getJSONObject()?.getString("name")
-                                        val email = response?.getJSONObject()?.getString("email")
-                                        userPayload = UserPayload(fullname = name, email = email)
-                                        otherAuthToken = result.accessToken.toString()
-                                        signInViewModel.onGetAccessToken(
-                                            otherAuthType!!,
-                                            otherAuthToken,
-                                            userPayload,
-                                        )
-                                    } catch (e: Exception) {
-                                        e.printStackTrace()
-                                        signInViewModel.errorMessage.value =
-                                            getString(R.string.signin_facebook_error)
-                                    }
-                                }
-                            val parameters = Bundle()
-                            parameters.putString("fields", "id,name,email,gender,birthday")
-                            request.parameters = parameters
-                            request.executeAsync()
-                        }
+            val fbLoginManager = LoginManager.getInstance()
+            fbLoginManager.setLoginBehavior(LoginBehavior.WEB_ONLY)
+            fbLoginManager.registerCallback(
+                callbackManager,
+                object : FacebookCallback<LoginResult> {
+                    override fun onSuccess(result: LoginResult) {
+                        signInByFacebookToken(result.accessToken)
+                    }
 
-                        override fun onCancel() {
-                            signInViewModel.loadingIndicator.value = false
-                        }
+                    override fun onCancel() {
+                        signInViewModel.loadingIndicator.value = false
+                    }
 
-                        override fun onError(error: FacebookException) {
-                            signInViewModel.onGetAccessTokenFail(error.message)
-                        }
-                    },
-                )
+                    override fun onError(error: FacebookException) {
+                        signInViewModel.loadingIndicator.value = false
+                        signInViewModel.errorMessage.value =
+                            getString(R.string.signin_facebook_error)
+                    }
+                },
+            )
 
             val accessToken = AccessToken.getCurrentAccessToken()
             if (accessToken != null && !accessToken.isExpired) {
-                otherAuthToken = accessToken.toString()
-                userPayload = null
-                signInViewModel.onGetAccessToken(otherAuthType!!, otherAuthToken, userPayload)
+                signInByFacebookToken(accessToken)
             } else {
-                LoginManager.getInstance()
-                    .logInWithReadPermissions(
-                        this,
-                        callbackManager,
-                        listOf("public_profile", "email"),
-                    )
+                LoginManager.getInstance().logInWithReadPermissions(
+                    this,
+                    callbackManager,
+                    listOf("public_profile", "email"),
+                )
             }
         }
+    }
+
+    private fun signInByFacebookToken(accessToken: AccessToken) {
+        val request =
+            GraphRequest.newMeRequest(accessToken) { _, response ->
+                try {
+                    val name = response?.getJSONObject()?.getString("name")
+                    val email = response?.getJSONObject()?.getString("email")
+                    userPayload = UserPayload(fullname = name, email = email)
+                    otherAuthToken = accessToken.toString()
+                    signInViewModel.onGetAccessToken(
+                        otherAuthType!!,
+                        otherAuthToken,
+                        userPayload,
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    signInViewModel.errorMessage.value =
+                        getString(R.string.signin_facebook_error)
+                }
+            }
+        val parameters = Bundle()
+        parameters.putString("fields", "id,name,email,gender,birthday")
+        request.parameters = parameters
+        request.executeAsync()
     }
 }

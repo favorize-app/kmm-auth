@@ -1,6 +1,0 @@
-framework module auth_shared {
-    umbrella header "auth_shared.h"
-
-    export *
-    module * { export * }
-}

@@ -28,9 +28,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="multi.platform.auth.example" />
-                  <option name="mobileSdkAppId" value="1:157772197530:android:b1640fc21620c04b303923" />
-                  <option name="projectId" value="kmm-auth-example" />
-                  <option name="projectNumber" value="157772197530" />
+                  <option name="mobileSdkAppId" value="1:307690991958:android:159e13ca9a07d4aa68e6f7" />
+                  <option name="projectId" value="kmm-example-app" />
+                  <option name="projectNumber" value="307690991958" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage", "DataBindingWithoutKapt")
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
 
@@ -69,6 +70,30 @@ android {
                 dimension = "api"
                 applicationIdSuffix = if (it != mainFlavour) ".${it}" else ""
                 versionNameSuffix = if (it != mainFlavour) "-${it}" else ""
+                manifestPlaceholders["fb_app_id"] =
+                    localProperties.getProperty("fb_app_id_${it}").replace("\"", "")
+                manifestPlaceholders["fb_client_token"] =
+                    localProperties.getProperty("fb_client_token_${it}").replace("\"", "")
+                buildConfigField(
+                    "String",
+                    "FB_APP_ID",
+                    localProperties.getProperty("fb_app_id_${it}")
+                )
+                buildConfigField(
+                    "String",
+                    "GOOGLE_WEB_CLIENT_ID",
+                    localProperties.getProperty("google_web_client_id_${it}")
+                )
+                buildConfigField(
+                    "String",
+                    "AUTH_SERVER",
+                    localProperties.getProperty("auth_server_${it}")
+                )
+                buildConfigField(
+                    "String",
+                    "ONESIGNAL_APP_ID",
+                    localProperties.getProperty("onesignal_app_id_${it}")
+                )
                 resValue(
                     "string",
                     "app_name",
@@ -78,16 +103,6 @@ android {
                     "string",
                     "app_version",
                     String.format("%s%s", "${defaultConfig.versionName}", "${versionNameSuffix}")
-                )
-                resValue(
-                    "string", "route_profile_full",
-                    localProperties.getProperty("scheme") + (if (it != mainFlavour) "-$it" else "") + "://" +
-                            localProperties.getProperty("host") + "/profile"
-                )
-                resValue(
-                    "string",
-                    "route_profile",
-                    localProperties.getProperty("host") + "/profile"
                 )
             }
         }

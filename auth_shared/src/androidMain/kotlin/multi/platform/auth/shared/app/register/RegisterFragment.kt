@@ -109,7 +109,7 @@ class RegisterFragment : CoreFragment() {
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection_full).replace(
+                        getString(R.string.route_auth_error_connection).replace(
                             "{key}",
                             AuthKey.REGISTER_KEY,
                         ),
@@ -165,7 +165,7 @@ class RegisterFragment : CoreFragment() {
                 )
             }
             doOnTextChanged { text, _, _, _ ->
-                if (registerViewModel.country.value == getString(R.string.country_codes_default_code) && text.toString() == "0") {
+                if (registerViewModel.country.value == authConfig.countryCode && text.toString() == "0") {
                     binding.etPhone.setText("")
                 }
             }

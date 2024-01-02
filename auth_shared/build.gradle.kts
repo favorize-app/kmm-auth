@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_VARIABLE", "UnstableApiUsage")
+
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import groovy.util.Node
 import groovy.util.NodeList
@@ -35,6 +36,38 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val host = "https://" + localProperties.getProperty("host")
+        resValue(
+            "string",
+            "route_auth_sign_in",
+            "$host/auth/sign-in"
+        )
+        resValue(
+            "string",
+            "route_auth_sign_out",
+            "$host/auth/sign-out"
+        )
+        resValue(
+            "string",
+            "route_auth_register",
+            "$host/auth/register/{country}/{phone}/{transactionId}"
+        )
+        resValue(
+            "string",
+            "route_auth_otp",
+            "$host/auth/otp/{state}/{country}/{phone}/{duration}/{transactionId}"
+        )
+        resValue(
+            "string",
+            "route_auth_forget_password",
+            "$host/auth/password/forget"
+        )
+        resValue(
+            "string",
+            "route_auth_error_connection",
+            "$host/auth/error/connection/{key}"
+        )
     }
     buildTypes {
         getByName("release") {
@@ -54,15 +87,9 @@ android {
         buildConfig = true
         dataBinding = true
     }
-    flavorDimensions += "api"
-    productFlavors {
-        val flavours = localProperties.getProperty("flavors").split(",")
-        flavours.forEach { create(it) { dimension = "api" } }
-    }
 }
 
-@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
-kotlin {
+@OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class) kotlin {
     targetHierarchy.default()
 
     androidTarget {
@@ -164,7 +191,7 @@ publishing {
 koverReport {
     val excs: MutableList<String> by rootProject.extra
     defaults {
-        mergeWith("storeDebug")
+        mergeWith("debug")
         verify {
             rule("Minimal line coverage rate in percents") {
                 minBound(45)
@@ -176,7 +203,7 @@ koverReport {
             classes(*excs.toTypedArray())
         }
     }
-    androidReports("storeRelease") {
+    androidReports("release") {
         filters {
             excludes {
                 classes(*excs.toTypedArray())

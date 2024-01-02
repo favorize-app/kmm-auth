@@ -13,7 +13,6 @@ import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import com.onesignal.OneSignal
-import multi.platform.auth.shared.BuildConfig
 import multi.platform.auth.shared.R
 import multi.platform.auth.shared.databinding.SignoutDialogFragmentBinding
 import multi.platform.auth.shared.external.AuthConfig
@@ -90,7 +89,7 @@ class SignOutDialogFragment : CoreDialogFragment() {
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection_full).replace(
+                        getString(R.string.route_auth_error_connection).replace(
                             "{key}",
                             AuthKey.SIGN_OUT_KEY,
                         ),
@@ -113,7 +112,7 @@ class SignOutDialogFragment : CoreDialogFragment() {
         if (ok) {
             persistent.remove(CommonKey.ACCESS_TOKEN_KEY)
             persistent.remove(CommonKey.REFRESH_TOKEN_KEY)
-            if (BuildConfig.ONESIGNAL_APP_ID.isNotEmpty()) {
+            if (authConfig.onesignalAppId.isNotEmpty()) {
                 OneSignal.logout()
             }
             setFragmentResult(AuthKey.SIGN_OUT_KEY, bundleOf(AuthKey.SIGN_OUT_KEY to true))

@@ -6,12 +6,5 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="multi.platform.auth.example.app.profile.ProfileFragment"
-        android:label="ProfileFragment">
-        <deepLink
-            android:autoVerify="true"
-            app:uri="@string/route_profile_full" />
-        <deepLink
-            android:autoVerify="true"
-            app:uri="@string/route_profile" />
-    </fragment>
+        android:label="ProfileFragment" />
 </navigation>

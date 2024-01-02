@@ -33,9 +33,13 @@
             </intent-filter>
             <nav-graph android:value="@navigation/main_nav_graph" />
         </activity>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="${fb_app_id}" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="${fb_client_token}" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
