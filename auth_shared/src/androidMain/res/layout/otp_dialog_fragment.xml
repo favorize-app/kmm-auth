@@ -259,7 +259,7 @@
 
             <include
                 android:id="@+id/loading_view"
-                layout="@layout/loading_view"
+                layout="@layout/auth_loading_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toTopOf="parent"

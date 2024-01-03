@@ -36,38 +36,6 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val host = "https://" + localProperties.getProperty("host")
-        resValue(
-            "string",
-            "route_auth_sign_in",
-            "$host/auth/sign-in"
-        )
-        resValue(
-            "string",
-            "route_auth_sign_out",
-            "$host/auth/sign-out"
-        )
-        resValue(
-            "string",
-            "route_auth_register",
-            "$host/auth/register/{country}/{phone}/{transactionId}"
-        )
-        resValue(
-            "string",
-            "route_auth_otp",
-            "$host/auth/otp/{state}/{country}/{phone}/{duration}/{transactionId}"
-        )
-        resValue(
-            "string",
-            "route_auth_forget_password",
-            "$host/auth/password/forget"
-        )
-        resValue(
-            "string",
-            "route_auth_error_connection",
-            "$host/auth/error/connection/{key}"
-        )
     }
     buildTypes {
         getByName("release") {

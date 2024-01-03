@@ -25,7 +25,6 @@ import multi.platform.core.shared.external.extensions.goTo
 import multi.platform.core.shared.external.utilities.Persistent
 import org.koin.core.component.inject
 import timber.log.Timber
-import multi.platform.auth.shared.R as aR
 
 class ProfileFragment : CoreFragment() {
     private val persistent: Persistent by inject()
@@ -60,10 +59,10 @@ class ProfileFragment : CoreFragment() {
             lifecycleOwner = viewLifecycleOwner
             profileVM = profileViewModel
             btnSignIn.setOnClickListener {
-                goTo(getString(aR.string.route_auth_sign_in))
+                goTo(getString(R.string.route_auth_sign_in))
             }
             btnSignOut.setOnClickListener {
-                goTo(getString(aR.string.route_auth_sign_out))
+                goTo(getString(R.string.route_auth_sign_out))
             }
         }
     }

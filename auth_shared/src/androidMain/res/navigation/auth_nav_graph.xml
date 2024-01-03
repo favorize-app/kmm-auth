@@ -36,7 +36,7 @@
             app:uri="@string/route_auth_register" />
     </fragment>
     <dialog
-        android:id="@+id/authSignOutDialogFragment"
+        android:id="@+id/signOutDialogFragment"
         android:name="multi.platform.auth.shared.app.signoutdialog.SignOutDialogFragment"
         android:label="SignOutDialogFragment">
         <deepLink

@@ -1,7 +1,5 @@
 package multi.platform.auth.shared
 
-import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.okhttp.OkHttp
 import multi.platform.auth.shared.app.forgetpassworddialog.ForgetPasswordViewModel
 import multi.platform.auth.shared.app.otpdialog.OtpViewModel
 import multi.platform.auth.shared.app.register.RegisterViewModel
@@ -22,7 +20,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 actual fun authModule() = module {
-    single<HttpClientEngine> { OkHttp.create() }
     single<AuthRepository> { AuthRepositoryImpl(get(), get()) }
 
     singleOf(::AuthorizationUseCase)

@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.spotless)
 }
+apply(from = "auth-module.gradle")
 
 dependencies {
     kover(project(":auth_shared"))

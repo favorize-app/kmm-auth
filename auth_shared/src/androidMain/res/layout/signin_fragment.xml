@@ -189,7 +189,7 @@
 
         <include
             android:id="@+id/loading_view"
-            layout="@layout/loading_view" />
+            layout="@layout/auth_loading_view" />
 
     </RelativeLayout>
 

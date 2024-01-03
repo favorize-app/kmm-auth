@@ -15,10 +15,17 @@ class AuthConfigImpl(
     override val rootView: Int = R.id.cl_root,
     override val logo: Int = R.mipmap.ic_launcher,
     override val countryFlag: Int = R.drawable.country,
+    override val countryCode: String = "+62",
     override val fbAppId: String = BuildConfig.FB_APP_ID,
     override val googleWebClientId: String = BuildConfig.GOOGLE_WEB_CLIENT_ID,
     override val onesignalAppId: String = BuildConfig.ONESIGNAL_APP_ID,
-    override val countryCode: String = "+62",
+
+    override val routeSignIn: Int = R.string.route_auth_sign_in,
+    override val routeSignOut: Int = R.string.route_auth_sign_out,
+    override val routeRegister: Int = R.string.route_auth_register,
+    override val routeOtp: Int = R.string.route_auth_otp,
+    override val routeForgetPassword: Int = R.string.route_auth_forget_password,
+    override val routeErrorConnection: Int = R.string.route_auth_error_connection,
 
     override val host: String = BuildConfig.AUTH_SERVER,
     override val headerTransactionIdKey: String = "x-header-transaction-id",

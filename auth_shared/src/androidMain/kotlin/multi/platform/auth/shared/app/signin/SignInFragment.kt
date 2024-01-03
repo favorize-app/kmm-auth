@@ -178,13 +178,13 @@ class SignInFragment : CoreFragment() {
                 this,
                 Lifecycle.State.STARTED,
             ) { g ->
-                g?.let { goTo(getString(R.string.route_auth_forget_password)) }
+                g?.let { goTo(getString(authConfig.routeForgetPassword)) }
                 it.onGoToForgetPasswordClick.value = null
             }
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection).replace(
+                        getString(authConfig.routeErrorConnection).replace(
                             "{key}",
                             AuthKey.SIGN_IN_KEY,
                         ),
@@ -271,7 +271,7 @@ class SignInFragment : CoreFragment() {
 
     private fun goToRegister(country: String, transactionId: String, phone: String? = null) {
         val routeAuthRegister =
-            getString(R.string.route_auth_register).replace("{country}", country)
+            getString(authConfig.routeRegister).replace("{country}", country)
                 .replace("{transactionId}", transactionId)
         phone?.let { routeAuthRegister.replace("{phone}", it) }
         goTo(routeAuthRegister)
@@ -305,7 +305,7 @@ class SignInFragment : CoreFragment() {
     private fun onCheckPhone(ticket: Ticket?) {
         ticket?.let { t ->
             goTo(
-                getString(R.string.route_auth_otp).replace("{state}", t.state.toString())
+                getString(authConfig.routeOtp).replace("{state}", t.state.toString())
                     .replace("{country}", signInViewModel.country.value.toString())
                     .replace("{phone}", signInViewModel.phone.value.toString())
                     .replace("{duration}", t.otp?.duration.toString())

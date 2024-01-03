@@ -12,6 +12,13 @@ interface AuthConfig {
     val googleWebClientId: String
     val onesignalAppId: String
 
+    val routeSignIn: Int
+    val routeSignOut: Int
+    val routeRegister: Int
+    val routeOtp: Int
+    val routeForgetPassword: Int
+    val routeErrorConnection: Int
+
     val host: String
     val headerTransactionIdKey: String
     val signInByPhoneApi: String

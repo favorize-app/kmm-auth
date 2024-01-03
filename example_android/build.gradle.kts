@@ -65,39 +65,40 @@ android {
     productFlavors {
         val mainFlavour = localProperties.getProperty("mainFlavor")
         val flavours = localProperties.getProperty("flavors").split(",")
-        flavours.forEach {
-            create(it) {
+        flavours.forEach { flavor ->
+            create(flavor) {
                 dimension = "api"
-                applicationIdSuffix = if (it != mainFlavour) ".${it}" else ""
-                versionNameSuffix = if (it != mainFlavour) "-${it}" else ""
+                applicationIdSuffix = if (flavor != mainFlavour) ".${flavor}" else ""
+                versionNameSuffix = if (flavor != mainFlavour) "-${flavor}" else ""
+                manifestPlaceholders["host"] = localProperties.getProperty("host_${flavor}")
                 manifestPlaceholders["fb_app_id"] =
-                    localProperties.getProperty("fb_app_id_${it}").replace("\"", "")
+                    localProperties.getProperty("fb_app_id_${flavor}").replace("\"", "")
                 manifestPlaceholders["fb_client_token"] =
-                    localProperties.getProperty("fb_client_token_${it}").replace("\"", "")
+                    localProperties.getProperty("fb_client_token_${flavor}").replace("\"", "")
                 buildConfigField(
                     "String",
                     "FB_APP_ID",
-                    localProperties.getProperty("fb_app_id_${it}")
+                    localProperties.getProperty("fb_app_id_${flavor}")
                 )
                 buildConfigField(
                     "String",
                     "GOOGLE_WEB_CLIENT_ID",
-                    localProperties.getProperty("google_web_client_id_${it}")
+                    localProperties.getProperty("google_web_client_id_${flavor}")
                 )
                 buildConfigField(
                     "String",
                     "AUTH_SERVER",
-                    localProperties.getProperty("auth_server_${it}")
+                    localProperties.getProperty("auth_server_${flavor}")
                 )
                 buildConfigField(
                     "String",
                     "ONESIGNAL_APP_ID",
-                    localProperties.getProperty("onesignal_app_id_${it}")
+                    localProperties.getProperty("onesignal_app_id_${flavor}")
                 )
                 resValue(
                     "string",
                     "app_name",
-                    "${appName}${if (it != mainFlavour) " (${it.toUpperCaseAsciiOnly()})" else ""}"
+                    "${appName}${if (flavor != mainFlavour) " (${flavor.toUpperCaseAsciiOnly()})" else ""}"
                 )
                 resValue(
                     "string",

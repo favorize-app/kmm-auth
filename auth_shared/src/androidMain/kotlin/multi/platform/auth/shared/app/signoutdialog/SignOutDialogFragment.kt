@@ -89,7 +89,7 @@ class SignOutDialogFragment : CoreDialogFragment() {
             it.onException.launchAndCollectIn(this, Lifecycle.State.STARTED) { e ->
                 e?.let {
                     goTo(
-                        getString(R.string.route_auth_error_connection).replace(
+                        getString(authConfig.routeErrorConnection).replace(
                             "{key}",
                             AuthKey.SIGN_OUT_KEY,
                         ),
