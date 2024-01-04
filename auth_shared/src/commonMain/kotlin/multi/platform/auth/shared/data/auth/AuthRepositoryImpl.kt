@@ -7,7 +7,6 @@ import io.ktor.client.request.delete
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.headers
-import io.ktor.client.request.host
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -32,20 +31,17 @@ class AuthRepositoryImpl(
 ) : AuthRepository {
     override suspend fun signOut(accessToken: String?): JsonObject? =
         apiClientProvider.client.delete(authConfig.signOutApi) {
-            host = authConfig.host
             accessToken?.let { bearerAuth(it) }
         }.body()
 
     override suspend fun authorization(phone: String): JsonObject? =
         apiClientProvider.client.post(authConfig.signInByPhoneApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
 
     override suspend fun validatePhone(phone: String): JsonObject? =
         apiClientProvider.client.post(authConfig.validatePhoneApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
@@ -56,7 +52,6 @@ class AuthRepositoryImpl(
         phone: String,
     ): JsonObject? =
         apiClientProvider.client.post(authConfig.verifyOtpApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             setBody(VerifyOtpPayload(otp, type, phone.replace("+", "")))
         }.body()
@@ -68,7 +63,6 @@ class AuthRepositoryImpl(
         imageName: String?,
     ): JsonObject? =
         apiClientProvider.client.post(authConfig.registerApi) {
-            host = authConfig.host
             headers { append(authConfig.headerTransactionIdKey, trxid) }
             setBody(
                 MultiPartFormDataContent(
@@ -96,7 +90,6 @@ class AuthRepositoryImpl(
 
     override suspend fun signInEmail(email: String, password: String): JsonObject? =
         apiClientProvider.client.post(authConfig.signInByEmailApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             setBody(SignInByEmailPayload(email, password))
         }.body()
@@ -107,7 +100,6 @@ class AuthRepositoryImpl(
         userPayload: UserPayload?,
     ): JsonObject? =
         apiClientProvider.client.post(authConfig.signInByProviderApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             when (authType) {
                 AuthType.GOOGLE, AuthType.FACEBOOK -> setBody(
@@ -129,7 +121,6 @@ class AuthRepositoryImpl(
 
     override suspend fun forgetPassword(email: String): JsonObject? =
         apiClientProvider.client.post(authConfig.forgetPasswordApi) {
-            host = authConfig.host
             contentType(ContentType.Application.Json)
             setBody(EmailPayload(email))
         }.body()

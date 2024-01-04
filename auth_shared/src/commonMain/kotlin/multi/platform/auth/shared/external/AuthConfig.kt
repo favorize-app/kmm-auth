@@ -19,7 +19,6 @@ interface AuthConfig {
     val routeForgetPassword: Int
     val routeErrorConnection: Int
 
-    val host: String
     val headerTransactionIdKey: String
     val signInByPhoneApi: String
     val signInByEmailApi: String

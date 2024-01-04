@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'auth_shared'
-    spec.version                  = '0.6.0'
+    spec.version                  = '0.7.0'
     spec.homepage                 = 'https://gitlab.com/kotlin-multiplatform-mobile/auth'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
