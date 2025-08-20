@@ -138,7 +138,6 @@ kotlin {
             dependsOn(commonMain)
             dependencies {
                 // Mobile-specific core dependency
-                api(libs.kmm.core)
                 implementation(libs.ktor.client.darwin)
             }
         }
