@@ -118,7 +118,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                // HTTP client for API calls - works on all platforms
+                // HTTP client for API calls - multiplatform API (actual implementations are platform-specific, e.g. ktor-client-okhttp for Android, ktor-client-darwin for iOS, ktor-client-js for web)
                 api(libs.kmm.core)
                 // HTTP client for API calls\
                 implementation(libs.ktor.client.core)
