@@ -137,7 +137,7 @@ kotlin {
         val iosMain by getting {
             dependsOn(commonMain)
             dependencies {
-                // Mobile-specific core dependency
+                // HTTP client implementation for iOS (Darwin)
                 implementation(libs.ktor.client.darwin)
             }
         }
