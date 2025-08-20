@@ -9,8 +9,9 @@ plugins {
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.navigation).apply(false)
     alias(libs.plugins.dokka)
-    alias(libs.plugins.gms).apply(false)
-    alias(libs.plugins.crashlytics).apply(false)
+    // Firebase plugins removed - library is Firebase-free
+    // alias(libs.plugins.gms).apply(false)
+    // alias(libs.plugins.crashlytics).apply(false)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.kover)
     alias(libs.plugins.spotless)

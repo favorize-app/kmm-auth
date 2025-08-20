@@ -70,6 +70,17 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+    
+    // Web target using WASM
+    @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {
+            commonWebpackConfig {
+                outputFileName = "favorize-auth.js"
+            }
+        }
+        nodejs()
+    }
 
     val xcf = XCFrameworkConfig(project)
     cocoapods {
@@ -127,6 +138,19 @@ kotlin {
             dependencies {
                 // HTTP client implementation for iOS
                 implementation(libs.ktor.client.darwin)
+            }
+        }
+        
+        val wasmJsMain by getting {
+            dependencies {
+                // HTTP client implementation for Web/WASM
+                implementation(libs.ktor.client.js)
+            }
+        }
+        
+        val wasmJsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
         }
     }
