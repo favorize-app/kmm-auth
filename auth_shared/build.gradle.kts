@@ -115,7 +115,7 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 // Mobile-specific core dependency
-                api(libs.kmm.core)
+                // api(libs.kmm.core) // Removed: already declared in commonMain
                 api(libs.gms.auth)
                 api(libs.fb)
                 api(libs.biometric)
