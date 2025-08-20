@@ -71,12 +71,23 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
     
-    // Web target using WASM
+    // Traditional JavaScript target for broader browser support
+    js(IR) {
+        browser {
+            commonWebpackConfig {
+                outputFileName = "favorize-auth-legacy.js"
+            }
+        }
+        nodejs()
+        generateTypeScriptDefinitions()
+    }
+    
+    // Web target using WASM (modern browsers with better performance)
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs {
         browser {
             commonWebpackConfig {
-                outputFileName = "favorize-auth.js"
+                outputFileName = "favorize-auth-wasm.js"
             }
         }
         nodejs()
@@ -97,9 +108,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(libs.kmm.core)
-                
-                // HTTP client for API calls
+                // HTTP client for API calls - works on all platforms
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
                 implementation(libs.ktor.serialization.kotlinx.json)
@@ -116,6 +125,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                // Mobile-specific core dependency
+                api(libs.kmm.core)
                 api(libs.gms.auth)
                 api(libs.fb)
                 api(libs.biometric)
@@ -136,8 +147,23 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
+                // Mobile-specific core dependency
+                api(libs.kmm.core)
                 // HTTP client implementation for iOS
                 implementation(libs.ktor.client.darwin)
+            }
+        }
+        
+        val jsMain by getting {
+            dependencies {
+                // HTTP client implementation for traditional JavaScript
+                implementation(libs.ktor.client.js)
+            }
+        }
+        
+        val jsTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
             }
         }
         
