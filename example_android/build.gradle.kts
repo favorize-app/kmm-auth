@@ -6,7 +6,6 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.gms)
     id("androidx.navigation.safeargs.kotlin")
     id("kotlinx-serialization")
 }
