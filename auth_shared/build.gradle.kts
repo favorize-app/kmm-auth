@@ -67,6 +67,16 @@ kotlin {
         }
         publishLibraryVariants("release", "debug")
     }
+    
+    // Desktop (JVM) target for desktop applications
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_17.toString()
+            }
+        }
+    }
+    
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -87,7 +97,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(libs.kmm.core)
-                
                 // HTTP client for API calls
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
@@ -105,6 +114,8 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
+                // Mobile-specific core dependency
+                // api(libs.kmm.core) // Removed: already declared in commonMain
                 api(libs.gms.auth)
                 api(libs.fb)
                 api(libs.biometric)
@@ -124,9 +135,27 @@ kotlin {
             }
         }
         val iosMain by getting {
+            dependsOn(commonMain)
             dependencies {
-                // HTTP client implementation for iOS
+                // HTTP client implementation for iOS (Darwin)
                 implementation(libs.ktor.client.darwin)
+            }
+        }
+        
+        val desktopMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                // Desktop-specific dependencies
+                implementation(libs.ktor.client.okhttp) // Use OkHttp client for JVM
+            }
+        }
+        
+        val desktopTest by getting {
+            dependsOn(commonTest)
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(libs.junit)
+                implementation(libs.mockk)
             }
         }
     }

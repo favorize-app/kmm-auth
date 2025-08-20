@@ -13,7 +13,9 @@ dependencyResolutionManagement {
         maven("https://gitlab.com/api/v4/projects/38836420/packages/maven")
     }
 }
-rootProject.name = "FavorizeAuth"
+
+rootProject.name = "Auth"
+
 include(":auth_shared")
 // Temporarily exclude examples to focus on core auth module
 // include(":example_android")

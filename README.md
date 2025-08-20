@@ -1,4 +1,4 @@
-# Multi Platform Auth | [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://gitlab.com/kotlin-multiplatform-mobile/auth/tree/develop)
+# Multi Platform Auth
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status](https://gitlab.com/kotlin-multiplatform-mobile/auth/badges/main/pipeline.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/commits/main) [![coverage report](https://gitlab.com/kotlin-multiplatform-mobile/auth/badges/main/coverage.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/commits/main) [![Latest Release](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/badges/release.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/releases)
 
