@@ -1,13 +1,12 @@
 @file:Suppress("UnstableApiUsage", "DataBindingWithoutKapt")
 
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-import org.jetbrains.kotlin.util.capitalizeDecapitalize.toUpperCaseAsciiOnly
+// Removed deprecated import
 
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.gms)
-    alias(libs.plugins.crashlytics)
     id("androidx.navigation.safeargs.kotlin")
     id("kotlinx-serialization")
 }
@@ -20,7 +19,7 @@ val androidCompileSdkVersion: String by project
 val androidTargetSdkVersion: String by project
 val androidMinSdkVersion: String by project
 val iosDeploymentTarget: String by project
-val localProperties = gradleLocalProperties(rootDir)
+val localProperties = gradleLocalProperties(rootDir, providers)
 
 android {
     namespace = "$appId.example"
@@ -48,12 +47,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -98,7 +97,7 @@ android {
                 resValue(
                     "string",
                     "app_name",
-                    "${appName}${if (flavor != mainFlavour) " (${flavor.toUpperCaseAsciiOnly()})" else ""}"
+                    "${appName}${if (flavor != mainFlavour) " (${flavor.uppercase()})" else ""}"
                 )
                 resValue(
                     "string",
@@ -113,9 +112,5 @@ android {
 dependencies {
     implementation(project(":auth_shared"))
     implementation(libs.onesignal)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.messaging)
-    implementation(libs.firebase.crashlytics)
     testImplementation(libs.junit)
 }

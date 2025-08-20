@@ -66,4 +66,12 @@
     <string name="signout_sub_title">Apakah kamu yakin ingin keluar dari aplikasi ini?</string>
     <string name="signout_yes">Ya</string>
     <string name="signout_no">Tidak</string>
+    
+    <!-- Navigation Routes -->
+    <string name="route_auth_sign_in">auth_sign_in</string>
+    <string name="route_auth_otp">auth_otp</string>
+    <string name="route_auth_forget_password">auth_forget_password</string>
+    <string name="route_auth_register">auth_register</string>
+    <string name="route_auth_sign_out">auth_sign_out</string>
+    <string name="route_auth_error_connection">auth_error_connection</string>
 </resources>
