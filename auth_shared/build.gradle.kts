@@ -69,6 +69,16 @@ android {
         publishAllLibraryVariants()
         publishLibraryVariantsGroupedByFlavor = false
     }
+    
+    // Desktop (JVM) target for desktop applications
+    jvm("desktop") {
+        compilations.all {
+            kotlinOptions {
+                jvmTarget = JavaVersion.VERSION_1_8.toString()
+            }
+        }
+    }
+    
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -89,6 +99,10 @@ android {
         val commonMain by getting {
             dependencies {
                 api(libs.kmm.core)
+                // Ktor dependencies for HTTP networking
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.serialization.kotlinx.json)
             }
         }
         val commonTest by getting {
@@ -103,6 +117,8 @@ android {
         val androidMain by getting {
             dependsOn(commonMain)
             dependencies {
+                // Mobile-specific core dependency
+                api(libs.kmm.core)
                 api(libs.gms.auth)
                 api(libs.fb)
                 api(libs.biometric)
@@ -121,6 +137,28 @@ android {
         }
         val iosMain by getting {
             dependsOn(commonMain)
+            dependencies {
+                // Mobile-specific core dependency
+                api(libs.kmm.core)
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        
+        val desktopMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                // Desktop-specific dependencies
+                implementation(libs.ktor.client.okhttp) // Use OkHttp client for JVM
+            }
+        }
+        
+        val desktopTest by getting {
+            dependsOn(commonTest)
+            dependencies {
+                implementation(kotlin("test-junit"))
+                implementation(libs.junit)
+                implementation(libs.mockk)
+            }
         }
     }
 }
