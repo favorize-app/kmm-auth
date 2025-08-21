@@ -1,7 +1,7 @@
 package multi.platform.auth.shared.app.otpdialog
 
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.utils.io.errors.IOException
+import kotlinx.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,13 +9,14 @@ import kotlinx.coroutines.launch
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.AuthorizationUseCase
 import multi.platform.auth.shared.domain.auth.usecase.VerifyOtpUseCase
-import multi.platform.core.shared.app.common.CoreViewModel
+import multi.platform.auth.shared.base.BaseViewModel
+import multi.platform.auth.shared.domain.auth.usecase.VerifyOtpParams
 
 @Suppress("KOTLIN:S6305")
 class OtpViewModel(
     private val authorizationUseCase: AuthorizationUseCase,
     private val verifyOtpUseCase: VerifyOtpUseCase,
-) : CoreViewModel() {
+) : BaseViewModel() {
 
     private val tLogin = "LOGIN"
     private val tOnboarding = "ONBOARDING"
@@ -56,7 +57,7 @@ class OtpViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = verifyOtpUseCase.call(otp, type, country.value + phone.value)
+                val response = verifyOtpUseCase.execute(VerifyOtpParams(otp, type, country.value + phone.value))
                 if (type == tLogin) {
                     saveTokenLocal(response)
                 } else {
@@ -80,7 +81,7 @@ class OtpViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = authorizationUseCase.call(country.value + phone.value)
+                val response = authorizationUseCase.execute(country.value + phone.value)
                 loadingIndicator.value = false
                 otpError.value = ""
                 onResendOtp.value = response

@@ -1,5 +1,9 @@
 package multi.platform.auth.shared
 
-import org.koin.core.module.Module
+import multi.platform.auth.shared.external.AuthConfig
 
-expect fun authModule(): Module
+/**
+ * Platform-specific authentication module factory.
+ * Each platform should implement this to provide platform-specific configuration.
+ */
+expect fun createAuthModule(authConfig: AuthConfig): AuthModule

@@ -1,7 +1,7 @@
 package multi.platform.auth.shared.app.register
 
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.utils.io.errors.IOException
+import kotlinx.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,12 +9,14 @@ import kotlinx.coroutines.launch
 import multi.platform.auth.shared.data.auth.network.payload.UserPayload
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.domain.auth.usecase.RegisterUseCase
-import multi.platform.core.shared.app.common.CoreViewModel
+import multi.platform.auth.shared.base.BaseViewModel
+import multi.platform.auth.shared.utils.ValidationUtils
+import multi.platform.auth.shared.domain.auth.usecase.RegisterParams
 
 @Suppress("KOTLIN:S6305")
 class RegisterViewModel(
     private val registerUseCase: RegisterUseCase,
-) : CoreViewModel() {
+) : BaseViewModel() {
 
     var transactionId = ""
     var errorPasswordConfirm: String? = null
@@ -71,7 +73,7 @@ class RegisterViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = registerUseCase.call(transactionId, userPayload, imageBytes, imageName)
+                val response = registerUseCase.execute(RegisterParams(transactionId, userPayload, imageBytes, imageName))
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -88,18 +90,11 @@ class RegisterViewModel(
 
     fun validatePassword(): Boolean? {
         if (password.value == null) return null
-        val check =
-            !Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$").matches(
-                password.value.toString(),
-            )
-        passwordError.value = if (check) errorPasswordFormat else null
-        return check
+        return ValidationUtils.validatePasswordStrength(password, passwordError)
     }
 
     fun validatePasswordConfirm(): Boolean? {
         if (passwordConfirm.value == null) return null
-        val check = passwordConfirm.value != password.value
-        passwordConfirmError.value = if (check) errorPasswordConfirm else null
-        return check
+        return ValidationUtils.validatePasswordMatch(password, passwordConfirm, passwordConfirmError)
     }
 }

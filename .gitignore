@@ -9,6 +9,10 @@
 .externalNativeBuild
 .cxx
 
+# Kotlin Multiplatform generated files
+kotlin-js-store/
+.kotlin/
+
 # Properties and configuration
 /local.properties
 local.properties

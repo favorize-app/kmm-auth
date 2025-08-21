@@ -1,18 +1,18 @@
 package multi.platform.auth.shared.app.forgetpassworddialog
 
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.utils.io.errors.IOException
+import kotlinx.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import multi.platform.auth.shared.domain.auth.usecase.ForgetPasswordUseCase
-import multi.platform.core.shared.app.common.CoreViewModel
+import multi.platform.auth.shared.base.BaseViewModel
 
 @Suppress("KOTLIN:S6305")
 class ForgetPasswordViewModel(
     private val forgetPasswordUseCase: ForgetPasswordUseCase,
-) : CoreViewModel() {
+) : BaseViewModel() {
 
     val email = MutableStateFlow<String?>(null)
     val emailError = MutableStateFlow<String?>(null)
@@ -25,7 +25,7 @@ class ForgetPasswordViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                forgetPasswordUseCase.call(email.value!!)
+                forgetPasswordUseCase.execute(email.value!!)
                 scope.launch {
                     loadingIndicator.value = false
                     onSubmit.value = true

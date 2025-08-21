@@ -23,25 +23,24 @@ import multi.platform.auth.shared.data.auth.network.payload.VerifyOtpPayload
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.enums.AuthType
-import multi.platform.core.shared.external.utilities.network.ApiClientProvider
 
 class AuthRepositoryImpl(
     private val authConfig: AuthConfig,
-    private val apiClientProvider: ApiClientProvider<HttpClient>,
+    private val httpClient: HttpClient,
 ) : AuthRepository {
     override suspend fun signOut(accessToken: String?): JsonObject? =
-        apiClientProvider.client.delete(authConfig.signOutApi) {
+        httpClient.delete(authConfig.signOutApi) {
             accessToken?.let { bearerAuth(it) }
         }.body()
 
     override suspend fun authorization(phone: String): JsonObject? =
-        apiClientProvider.client.post(authConfig.signInByPhoneApi) {
+        httpClient.post(authConfig.signInByPhoneApi) {
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
 
     override suspend fun validatePhone(phone: String): JsonObject? =
-        apiClientProvider.client.post(authConfig.validatePhoneApi) {
+        httpClient.post(authConfig.validatePhoneApi) {
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
@@ -51,7 +50,7 @@ class AuthRepositoryImpl(
         type: String,
         phone: String,
     ): JsonObject? =
-        apiClientProvider.client.post(authConfig.verifyOtpApi) {
+        httpClient.post(authConfig.verifyOtpApi) {
             contentType(ContentType.Application.Json)
             setBody(VerifyOtpPayload(otp, type, phone.replace("+", "")))
         }.body()
@@ -62,7 +61,7 @@ class AuthRepositoryImpl(
         imageBytes: ByteArray?,
         imageName: String?,
     ): JsonObject? =
-        apiClientProvider.client.post(authConfig.registerApi) {
+        httpClient.post(authConfig.registerApi) {
             headers { append(authConfig.headerTransactionIdKey, trxid) }
             setBody(
                 MultiPartFormDataContent(
@@ -89,7 +88,7 @@ class AuthRepositoryImpl(
         }.body()
 
     override suspend fun signInEmail(email: String, password: String): JsonObject? =
-        apiClientProvider.client.post(authConfig.signInByEmailApi) {
+        httpClient.post(authConfig.signInByEmailApi) {
             contentType(ContentType.Application.Json)
             setBody(SignInByEmailPayload(email, password))
         }.body()
@@ -99,7 +98,7 @@ class AuthRepositoryImpl(
         token: String,
         userPayload: UserPayload?,
     ): JsonObject? =
-        apiClientProvider.client.post(authConfig.signInByProviderApi) {
+        httpClient.post(authConfig.signInByProviderApi) {
             contentType(ContentType.Application.Json)
             when (authType) {
                 AuthType.GOOGLE, AuthType.FACEBOOK -> setBody(
@@ -120,7 +119,7 @@ class AuthRepositoryImpl(
         }.body()
 
     override suspend fun forgetPassword(email: String): JsonObject? =
-        apiClientProvider.client.post(authConfig.forgetPasswordApi) {
+        httpClient.post(authConfig.forgetPasswordApi) {
             contentType(ContentType.Application.Json)
             setBody(EmailPayload(email))
         }.body()

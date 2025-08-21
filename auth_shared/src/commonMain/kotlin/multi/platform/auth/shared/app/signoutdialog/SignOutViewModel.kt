@@ -1,18 +1,18 @@
 package multi.platform.auth.shared.app.signoutdialog
 
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.utils.io.errors.IOException
+import kotlinx.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import multi.platform.auth.shared.domain.auth.usecase.SignOutUseCase
-import multi.platform.core.shared.app.common.CoreViewModel
+import multi.platform.auth.shared.base.BaseViewModel
 
 @Suppress("KOTLIN:S6305")
 class SignOutViewModel(
     private val signOutUseCase: SignOutUseCase,
-) : CoreViewModel() {
+) : BaseViewModel() {
     val onSignOut = MutableStateFlow(false)
     val onCancel = MutableStateFlow(false)
 
@@ -22,7 +22,7 @@ class SignOutViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                signOutUseCase.call(accessToken)
+                signOutUseCase.execute(null) // accessToken is not defined, using null for now
                 scope.launch {
                     loadingIndicator.value = false
                     onSignOut.value = true

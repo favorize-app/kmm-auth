@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.kotlinSerialization)
     alias(libs.plugins.navigation).apply(false)
-    // alias(libs.plugins.compose).apply(false)
+    alias(libs.plugins.compose).apply(false)
     alias(libs.plugins.dokka)
     alias(libs.plugins.sonarqube)
     alias(libs.plugins.kover)

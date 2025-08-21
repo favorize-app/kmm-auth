@@ -117,7 +117,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 // HTTP client for API calls - multiplatform API (actual implementations are platform-specific, e.g. ktor-client-okhttp for Android, ktor-client-darwin for iOS, ktor-client-js for web)
-                api(libs.kmm.core)
                 // HTTP client for API calls\
                 implementation(libs.ktor.client.core)
                 implementation(libs.ktor.client.content.negotiation)
@@ -155,8 +154,6 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                // Mobile-specific core dependency
-                api(libs.kmm.core)
                 // HTTP client implementation for iOS
                 implementation(libs.ktor.client.darwin)
             }
@@ -192,6 +189,8 @@ kotlin {
             dependencies {
                 // Desktop-specific dependencies
                 implementation(libs.ktor.client.okhttp) // Use OkHttp client for JVM
+                implementation(libs.ktor.client.logging) // Add logging support for desktop
+                implementation(libs.ktor.client.content.negotiation) // Add content negotiation for desktop
             }
         }
         

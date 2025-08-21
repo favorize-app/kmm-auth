@@ -2,12 +2,14 @@ package multi.platform.auth.shared.domain.auth.usecase
 
 import multi.platform.auth.shared.domain.auth.AuthRepository
 import multi.platform.auth.shared.external.AuthConfig
-import multi.platform.core.shared.domain.common.usecase.CoreUseCase
+import multi.platform.auth.shared.base.BaseUseCase
+import multi.platform.auth.shared.domain.auth.entity.Ticket
 
 class SignOutUseCase(
     private val authConfig: AuthConfig,
     private val authRepository: AuthRepository,
-) : CoreUseCase {
-    override suspend fun call(vararg args: Any?) =
-        authConfig.signOutMapper(authRepository.signOut(args[0] as? String))
+) : BaseUseCase<String?, Ticket?>() {
+    override suspend fun perform(params: String?): Ticket? {
+        return authConfig.signOutMapper(authRepository.signOut(params))
+    }
 }

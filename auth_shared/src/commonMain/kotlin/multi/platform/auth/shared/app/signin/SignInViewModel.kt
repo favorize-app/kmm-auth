@@ -2,7 +2,7 @@ package multi.platform.auth.shared.app.signin
 
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
-import io.ktor.utils.io.errors.IOException
+import kotlinx.io.IOException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +14,8 @@ import multi.platform.auth.shared.domain.auth.usecase.SignInEmailUseCase
 import multi.platform.auth.shared.domain.auth.usecase.SignInProviderUseCase
 import multi.platform.auth.shared.domain.auth.usecase.ValidatePhoneUseCase
 import multi.platform.auth.shared.external.enums.AuthType
-import multi.platform.core.shared.app.common.CoreViewModel
+import multi.platform.auth.shared.base.BaseViewModel
+import multi.platform.auth.shared.domain.auth.usecase.SignInProviderParams
 
 @Suppress("KOTLIN:S6305")
 class SignInViewModel(
@@ -22,7 +23,7 @@ class SignInViewModel(
     private val validatePhoneUseCase: ValidatePhoneUseCase,
     private val signInEmailUseCase: SignInEmailUseCase,
     private val signInProviderUseCase: SignInProviderUseCase,
-) : CoreViewModel() {
+) : BaseViewModel() {
     val onCheckPhone = MutableStateFlow<Ticket?>(null)
     val authType = MutableStateFlow<AuthType?>(null)
     val country = MutableStateFlow<String?>(null)
@@ -66,7 +67,7 @@ class SignInViewModel(
         coroutine.launch {
             scope.launch { loadingIndicator.value = true }
             try {
-                val response = authorizationUseCase.call(country.value + phone.value)
+                val response = authorizationUseCase.execute(country.value + phone.value)
                 scope.launch {
                     loadingIndicator.value = false
                     onCheckPhone.value = response
@@ -88,7 +89,7 @@ class SignInViewModel(
     private fun validatePhone() {
         scope.launch {
             try {
-                val response = validatePhoneUseCase.call(country.value + phone.value)
+                val response = validatePhoneUseCase.execute(country.value + phone.value)
                 loadingIndicator.value = false
                 onCheckPhone.value = response
             } catch (e: Exception) {
@@ -107,7 +108,7 @@ class SignInViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = signInEmailUseCase.call(email.value.toString(), password.value.toString())
+                val response = signInEmailUseCase.execute(Pair(email.value.toString(), password.value.toString()))
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -124,7 +125,7 @@ class SignInViewModel(
         scope.launch {
             loadingIndicator.value = true
             try {
-                val response = signInProviderUseCase.call(authType, accessToken, userPayload)
+                val response = signInProviderUseCase.execute(SignInProviderParams(authType, accessToken, userPayload))
                 saveTokenLocal(response)
             } catch (e: Exception) {
                 e.printStackTrace()

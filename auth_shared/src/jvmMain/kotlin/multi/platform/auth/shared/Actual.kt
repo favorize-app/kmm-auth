@@ -2,7 +2,7 @@ package multi.platform.auth.shared
 
 import multi.platform.auth.shared.external.AuthConfig
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
@@ -10,11 +10,11 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 /**
- * Android-specific implementation of the authentication module factory.
- * Uses OkHttp engine for HTTP client optimized for Android.
+ * JVM (Desktop)-specific implementation of the authentication module factory.
+ * Uses CIO engine for HTTP client optimized for JVM platforms.
  */
 actual fun createAuthModule(authConfig: AuthConfig): AuthModule {
-    val httpClient = HttpClient(OkHttp) {
+    val httpClient = HttpClient(CIO) {
         install(ContentNegotiation) {
             json(Json {
                 prettyPrint = true
@@ -28,8 +28,13 @@ actual fun createAuthModule(authConfig: AuthConfig): AuthModule {
         }
         
         engine {
-            config {
-                retryOnConnectionFailure(true)
+            maxConnectionsCount = 1000
+            endpoint {
+                maxConnectionsPerRoute = 100
+                pipelineMaxSize = 20
+                keepAliveTime = 5000
+                connectTimeout = 5000
+                connectAttempts = 5
             }
         }
     }

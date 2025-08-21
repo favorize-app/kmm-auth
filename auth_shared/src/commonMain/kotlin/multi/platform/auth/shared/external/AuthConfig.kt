@@ -11,6 +11,9 @@ interface AuthConfig {
     val fbAppId: String
     val googleWebClientId: String
     val onesignalAppId: String
+    
+    // Debug configuration for logging and development
+    val isDebugMode: Boolean
 
     val routeSignIn: Int
     val routeSignOut: Int
