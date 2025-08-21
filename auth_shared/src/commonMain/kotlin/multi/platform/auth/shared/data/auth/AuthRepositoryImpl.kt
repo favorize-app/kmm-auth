@@ -29,18 +29,18 @@ class AuthRepositoryImpl(
     private val httpClient: HttpClient,
 ) : AuthRepository {
     override suspend fun signOut(accessToken: String?): JsonObject? =
-        httpClient.delete(authConfig.signOutApi) {
+        httpClient.delete(authConfig.api.endpoints.signOut) {
             accessToken?.let { bearerAuth(it) }
         }.body()
 
     override suspend fun authorization(phone: String): JsonObject? =
-        httpClient.post(authConfig.signInByPhoneApi) {
+        httpClient.post(authConfig.api.endpoints.signInByPhone) {
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
 
     override suspend fun validatePhone(phone: String): JsonObject? =
-        httpClient.post(authConfig.validatePhoneApi) {
+        httpClient.post(authConfig.api.endpoints.validatePhone) {
             contentType(ContentType.Application.Json)
             setBody(SignInByPhonePayload(phone.replace("+", "")))
         }.body()
@@ -50,7 +50,7 @@ class AuthRepositoryImpl(
         type: String,
         phone: String,
     ): JsonObject? =
-        httpClient.post(authConfig.verifyOtpApi) {
+        httpClient.post(authConfig.api.endpoints.verifyOtp) {
             contentType(ContentType.Application.Json)
             setBody(VerifyOtpPayload(otp, type, phone.replace("+", "")))
         }.body()
@@ -61,8 +61,8 @@ class AuthRepositoryImpl(
         imageBytes: ByteArray?,
         imageName: String?,
     ): JsonObject? =
-        httpClient.post(authConfig.registerApi) {
-            headers { append(authConfig.headerTransactionIdKey, trxid) }
+        httpClient.post(authConfig.api.endpoints.register) {
+            headers { append(authConfig.api.headers.transactionIdKey, trxid) }
             setBody(
                 MultiPartFormDataContent(
                     formData {
@@ -88,7 +88,7 @@ class AuthRepositoryImpl(
         }.body()
 
     override suspend fun signInEmail(email: String, password: String): JsonObject? =
-        httpClient.post(authConfig.signInByEmailApi) {
+        httpClient.post(authConfig.api.endpoints.signInByEmail) {
             contentType(ContentType.Application.Json)
             setBody(SignInByEmailPayload(email, password))
         }.body()
@@ -98,7 +98,7 @@ class AuthRepositoryImpl(
         token: String,
         userPayload: UserPayload?,
     ): JsonObject? =
-        httpClient.post(authConfig.signInByProviderApi) {
+        httpClient.post(authConfig.api.endpoints.signInByProvider) {
             contentType(ContentType.Application.Json)
             when (authType) {
                 AuthType.GOOGLE, AuthType.FACEBOOK -> setBody(
@@ -119,7 +119,7 @@ class AuthRepositoryImpl(
         }.body()
 
     override suspend fun forgetPassword(email: String): JsonObject? =
-        httpClient.post(authConfig.forgetPasswordApi) {
+        httpClient.post(authConfig.api.endpoints.forgetPassword) {
             contentType(ContentType.Application.Json)
             setBody(EmailPayload(email))
         }.body()
