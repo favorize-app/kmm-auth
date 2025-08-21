@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="42dp"
-                    android:text="@{vm.authType == AuthType.EMAIL ? @string/signin_title_email : @string/signin_title_phone }"
+                    android:text=""
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
@@ -76,19 +76,19 @@
                         layout="@layout/signin_phone_form_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{vm.authType == AuthType.PHONE ? View.VISIBLE : View.GONE}"
+                        android:visibility=""
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:vm="@{vm}" />
+                        bind:vm="" />
 
                     <include
                         android:id="@+id/email_form"
                         layout="@layout/signin_email_form_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{vm.authType == AuthType.EMAIL ? View.VISIBLE : View.GONE}"
+                        android:visibility=""
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:authConfig="@{authConfig}"
-                        bind:vm="@{vm}" />
+                        bind:authConfig=""
+                        bind:vm="" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -138,8 +138,8 @@
                         style="@style/Widget.Material3.Button.IconButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="@{()->vm.signInByGoogle()}"
-                        android:visibility="@{authConfig.googleWebClientId.isEmpty() ? View.GONE : View.VISIBLE}"
+                        android:onClick=""
+                        android:visibility=""
                         app:icon="@drawable/common_google_signin_btn_icon_light"
                         app:iconTint="@null"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,8 +151,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:onClick="@{()->vm.signInByFacebook()}"
-                        android:visibility="@{authConfig.fbAppId.isEmpty() ? View.GONE : View.VISIBLE}"
+                        android:onClick=""
+                        android:visibility=""
                         app:icon="@drawable/com_facebook_button_icon"
                         app:layout_constraintStart_toEndOf="@id/mb_google"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -163,7 +163,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:onClick="@{()->vm.sinInByBiometric()}"
+                        android:onClick=""
                         app:icon="@drawable/ic_fingerprint"
                         app:iconTint="@null"
                         app:layout_constraintStart_toEndOf="@id/mb_facebook"
@@ -175,8 +175,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
-                        android:onClick="@{()->vm.toggleForm()}"
-                        app:icon="@{vm.authType == AuthType.EMAIL ? @drawable/ic_phone : @drawable/ic_email}"
+                        android:onClick=""
+                        app:icon=""
                         app:iconTint="@null"
                         app:layout_constraintStart_toEndOf="@id/mb_biometric"
                         app:layout_constraintTop_toTopOf="parent" />

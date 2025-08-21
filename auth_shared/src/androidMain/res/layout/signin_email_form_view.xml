@@ -45,9 +45,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{vm.emailError != null ? vm.emailError : ``}"
+            android:text=""
             android:textColor="?attr/errorColor"
-            android:visibility="@{vm.emailError != null ? View.VISIBLE : View.GONE}"
+            android:visibility=""
             app:layout_constraintTop_toBottomOf="@id/et_email" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -76,10 +76,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@{vm.passwordError != null ? vm.passwordError : ``}"
+            android:text=""
             android:textColor="?attr/errorColor"
             android:textSize="12sp"
-            android:visibility="@{vm.passwordError != null ? View.VISIBLE : View.GONE}" />
+            android:visibility="" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.TextButton"
@@ -87,17 +87,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
-            android:onClick="@{()->vm.goToForgotPassword()}"
+            android:onClick=""
             android:text="@string/signin_forgot_password"
-            android:visibility="@{authConfig.forgetPasswordApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+            android:visibility="" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:enabled="@{vm.email != null &amp;&amp; vm.email.trim().isEmpty() == false &amp;&amp; vm.password != null &amp;&amp; vm.password.trim().isEmpty() == false &amp;&amp; vm.emailError == null &amp;&amp; vm.passwordError == null}"
-            android:onClick="@{()->vm.signInEmail()}"
+            android:enabled=""
+            android:onClick=""
             android:text="@string/signin_continue" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -114,16 +114,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/signin_dont_have_account"
-                android:visibility="@{authConfig.registerApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+                android:visibility="" />
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:onClick="@{()->vm.goToRegister()}"
+                android:onClick=""
                 android:text="@string/signin_register"
-                android:visibility="@{authConfig.registerApi.isEmpty() ? View.GONE : View.VISIBLE}" />
+                android:visibility="" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

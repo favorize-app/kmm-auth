@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@{vm.country + vm.phone}" />
+                    android:text="" />
 
             </LinearLayout>
 
@@ -88,7 +88,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -106,7 +106,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -124,7 +124,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -142,7 +142,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -160,7 +160,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -178,7 +178,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
                     android:autofillHints="@null"
-                    android:background="@{context.getDrawable(vm.otpError!=null ? R.drawable.bg_round8_stroke_error : R.drawable.bg_round8_stroke_normal)}"
+                    android:background=""
                     android:cursorVisible="false"
                     android:digits="1234567890"
                     android:gravity="center"
@@ -200,9 +200,9 @@
                 android:gravity="center"
                 android:paddingStart="50dp"
                 android:paddingEnd="50dp"
-                android:text="@{vm.otpError}"
+                android:text=""
                 android:textColor="?attr/colorError"
-                android:visibility="@{vm.otpError != null &amp;&amp; vm.otpError != `` ? View.VISIBLE : View.GONE}"
+                android:visibility=""
                 app:layout_constraintTop_toBottomOf="@id/ll_otp" />
 
             <LinearLayout
@@ -211,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                android:visibility="@{vm.time != null ? View.VISIBLE : View.GONE}"
+                android:visibility=""
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_otp_error">
@@ -227,7 +227,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="@{vm.time}"
+                    android:text=""
                     android:textColor="?attr/colorError" />
 
             </LinearLayout>
@@ -238,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{vm.otpResend}"
+                android:text=""
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll_otp_timer" />
@@ -251,7 +251,7 @@
                 android:layout_marginStart="36dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="36dp"
-                android:enabled="@{vm.otp1 != null &amp;&amp; vm.otp1.trim().isEmpty() == false &amp;&amp; vm.otp2 != null &amp;&amp; vm.otp2.trim().isEmpty() == false &amp;&amp; vm.otp3 != null &amp;&amp; vm.otp3.trim().isEmpty() == false &amp;&amp; vm.otp4 != null &amp;&amp; vm.otp4.trim().isEmpty() == false &amp;&amp; vm.otp5 != null &amp;&amp; vm.otp5.trim().isEmpty() == false &amp;&amp; vm.otp6 != null &amp;&amp; vm.otp6.trim().isEmpty() == false}"
+                android:enabled=""
                 android:text="@string/otp_submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

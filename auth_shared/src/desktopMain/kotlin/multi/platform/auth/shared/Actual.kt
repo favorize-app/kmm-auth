@@ -24,7 +24,7 @@ actual fun createAuthModule(authConfig: AuthConfig): AuthModule {
         }
         
         install(Logging) {
-            level = if (authConfig.isDebugMode) LogLevel.ALL else LogLevel.NONE
+            level = if (authConfig.debug.isDebugMode) LogLevel.ALL else LogLevel.NONE
         }
     }
     

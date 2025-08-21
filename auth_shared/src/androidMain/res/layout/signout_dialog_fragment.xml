@@ -47,7 +47,7 @@
                 android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
-                android:onClick="@{() -> vm.cancel()}"
+                android:onClick=""
                 android:text="@string/signout_no"
                 app:layout_constraintEnd_toStartOf="@id/mb_signout_yes"
                 app:layout_constraintStart_toStartOf="parent"
