@@ -17,5 +17,8 @@ dependencyResolutionManagement {
 rootProject.name = "Auth"
 
 include(":auth_shared")
-// Temporarily exclude examples to focus on core auth module
-// include(":example_android")
+include(":examples:android")
+include(":examples:ios")
+include(":examples:web")
+include(":examples:desktop")
+include(":examples:compose")
