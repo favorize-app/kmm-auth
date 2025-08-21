@@ -49,6 +49,8 @@ kotlin {
             dependencies {
                 implementation(compose.uiTooling)
                 implementation(compose.preview)
+                implementation("androidx.activity:activity-compose:1.8.2")
+                implementation("androidx.appcompat:appcompat:1.6.1")
             }
         }
         
@@ -56,6 +58,7 @@ kotlin {
             dependencies {
                 implementation(compose.uiTooling)
                 implementation(compose.preview)
+                implementation(compose.ui)
             }
         }
         
@@ -71,6 +74,8 @@ kotlin {
             dependencies {
                 implementation(compose.uiTooling)
                 implementation(compose.preview)
+                implementation(compose.web.core)
+                implementation(compose.web.svg)
             }
         }
         
@@ -78,6 +83,8 @@ kotlin {
             dependencies {
                 implementation(compose.uiTooling)
                 implementation(compose.preview)
+                implementation(compose.web.core)
+                implementation(compose.web.svg)
             }
         }
     }

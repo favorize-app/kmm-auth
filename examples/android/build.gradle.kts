@@ -32,6 +32,10 @@ android {
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        manifestPlaceholders["host"] = "example.com"
+        manifestPlaceholders["fb_app_id"] = "123456789"
+        manifestPlaceholders["fb_client_token"] = "example_token"
     }
 
     buildTypes {
