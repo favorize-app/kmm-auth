@@ -4,14 +4,13 @@ import multi.platform.auth.shared.external.AuthConfig
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.LogLevel
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 /**
  * Android-specific implementation of the authentication module factory.
  * Uses OkHttp engine for HTTP client optimized for Android.
+ * Note: Logging plugin is not available for Android target in this configuration
  */
 actual fun createAuthModule(authConfig: AuthConfig): AuthModule {
     val httpClient = HttpClient(OkHttp) {
@@ -22,16 +21,8 @@ actual fun createAuthModule(authConfig: AuthConfig): AuthModule {
                 ignoreUnknownKeys = true
             })
         }
-        
-        install(Logging) {
-            level = if (authConfig.isDebugMode) LogLevel.ALL else LogLevel.NONE
-        }
-        
-        engine {
-            config {
-                retryOnConnectionFailure(true)
-            }
-        }
+        // Note: Logging plugin is not available for Android target in this configuration
+        // HTTP client will work without logging
     }
     
     return AuthModule(authConfig, httpClient)
