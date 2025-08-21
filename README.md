@@ -1,31 +1,49 @@
-# Multi Platform Auth
+# KMM Auth - Standalone Authentication Module
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![pipeline status](https://gitlab.com/kotlin-multiplatform-mobile/auth/badges/main/pipeline.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/commits/main) [![coverage report](https://gitlab.com/kotlin-multiplatform-mobile/auth/badges/main/coverage.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/commits/main) [![Latest Release](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/badges/release.svg)](https://gitlab.com/kotlin-multiplatform-mobile/auth/-/releases)
 
+## 🚀 **NEW: Standalone Architecture**
+
+**This module is now completely standalone!** 🎉 No external dependencies on KMM Core or other heavy libraries. Ready for production use.
+
 ## Contents
 
-- [Documentation](https://gitlab.com/tossaro/kotlin-multi-platform-auth/tree/main/docs)
+- [Documentation](docs/)
+  - [Auth Module Guide](docs/AUTH_MODULE_GUIDE.md)
+  - [API Reference](docs/API_REFERENCE.md)
+  - [Usage Examples](docs/USAGE_EXAMPLES.md)
+  - [Migration Guide](MIGRATION_GUIDE.md)
 - [Features](#features)
 - [Requirements](#requirements)
-- [Usage](#usage)
+- [Quick Start](#quick-start)
 - [Project Structure](#project-structure)
 - [Architecture](#architecture)
 - [Commands](#commands)
 
 ## Features
 
-- Provide Sign In with multiple provider:
-    - Google
-    - Facebook
-    - Email
-    - Phone
-- Provide Verify OTP Dialog
-- Provide complete registration for new user with detail:
-    - Avatar
-    - Name
-    - Bio
-    - Email
-- Powered by KOIN for dependency injection and using MVVM pattern with clean architecture.
+- **🔐 Authentication Providers**:
+  - Google OAuth
+  - Facebook OAuth
+  - Email/Password
+  - Phone/SMS
+  - Biometric authentication (Android)
+- **📱 Cross-Platform Support**:
+  - Android (OkHttp engine)
+  - iOS (Darwin engine)
+  - Desktop/JVM (OkHttp engine)
+  - JavaScript/Web (JS engine)
+  - WebAssembly (JS engine)
+- **🎯 Complete User Flows**:
+  - User registration with avatar, name, bio, email
+  - OTP verification dialog
+  - Password reset
+  - Sign out
+- **🏗️ Modern Architecture**:
+  - MVVM pattern with clean architecture
+  - Manual dependency injection (no external DI frameworks)
+  - Coroutines for async operations
+  - StateFlow for reactive state management
 
 ## Requirements
 
@@ -36,63 +54,113 @@
 5. This project is built using Android Studio version 2023.1.1 and Android Gradle 8.2
 6. For iOS, please install [COCOAPODS](https://cocoapods.org/)
 
-## Usage
+## Quick Start
 
-1. Edit settings.gradle in your root folder:
+### 1. Add Repository
 
-```groovy
+Edit `settings.gradle.kts` in your root folder:
+
+```kotlin
 dependencyResolutionManagement {
     repositories {
-        //...
-        maven { url 'https://gitlab.com/api/v4/projects/38961532/packages/maven' }
+        // ... other repositories
+        maven { url = uri("https://gitlab.com/api/v4/projects/38961532/packages/maven") }
     }
 }
 ```
 
-2. Last, add 'implementation "multi.platform.auth:auth_shared:${version}"' inside tag
-   dependencies { . . . } of build.gradle app
+### 2. Add Dependency
 
-For the high level hierarchy, the project separate into 2 main modules, which are :
+Add to your module's `build.gradle.kts`:
 
-### 1. [Core iOS](https://gitlab.com/kotlin-multiplatform-mobile/auth/tree/main/core_ios)
+```kotlin
+dependencies {
+    implementation("multi.platform.auth:auth_shared:$version")
+}
+```
 
-This module contains iOS code that holds the iOS library, that can be injected to iOS app.
+### 3. Initialize the Module
 
-### 2. [Core Shared](https://gitlab.com/kotlin-multiplatform-mobile/auth/tree/main/core_shared)
+```kotlin
+import multi.platform.auth.shared.createAuthModule
+import multi.platform.auth.shared.external.AuthConfig
 
-This module contains shared code that holds the domain and data layers and some part of the
-presentation logic ie.shared viewmodels.
+// Create your AuthConfig implementation
+val authConfig = object : AuthConfig {
+    override val isDebugMode: Boolean = BuildConfig.DEBUG
+    // ... implement other required properties
+}
+
+// Create the auth module (platform-specific)
+val authModule = createAuthModule(authConfig)
+
+// Use ViewModels
+val signInViewModel = authModule.createSignInViewModel()
+val registerViewModel = authModule.createRegisterViewModel()
+```
+
+### 4. Platform-Specific Setup
+
+See [Usage Examples](docs/USAGE_EXAMPLES.md) for detailed platform-specific integration guides.
 
 ## Project Structure
 
-```plantuml
-:auth_shared;
-fork
-    :example_android;
-fork again
-    :auth_ios;
-    :example_ios;
-end fork
-end
 ```
-
+kmm-auth-dev/
+├── auth_shared/                    # ✅ Standalone Auth Module
+│   ├── src/
+│   │   ├── commonMain/            # Shared Kotlin code
+│   │   ├── androidMain/           # Android-specific implementations
+│   │   ├── iosMain/               # iOS-specific implementations
+│   │   ├── jsMain/                # JavaScript/Web implementations
+│   │   ├── wasmJsMain/            # WebAssembly implementations
+│   │   └── jvmMain/               # Desktop/JVM implementations
+│   └── build.gradle.kts
+├── examples/
+│   └── compose/                   # Compose Multiplatform example
+├── docs/                          # 📚 Documentation
+│   ├── AUTH_MODULE_GUIDE.md
+│   ├── API_REFERENCE.md
+│   └── USAGE_EXAMPLES.md
+└── MIGRATION_GUIDE.md            # Migration from KMM Core
+```
 
 ## Architecture
 
-This project implement
-Clean [Architecture by Fernando Cejas](https://github.com/android10/Android-CleanArchitecture)
+### 🏗️ Standalone Architecture
 
-### Clean architecture
+The module now uses a **lightweight, standalone architecture** with:
 
-![Image Clean architecture](/resources/clean_architecture.png)
+- **BaseViewModel**: Lightweight ViewModel base class
+- **BaseUseCase**: Standalone UseCase base class  
+- **Manual DI**: Direct dependency injection without external frameworks
+- **Platform-specific HTTP clients**: Optimized for each platform
+- **Shared business logic**: Common authentication flows
 
-### Architectural approach
+### 🔄 Clean Architecture Layers
 
-![Image Architectural approach](/resources/clean_architecture_layers.png)
+```
+┌─────────────────────────────────────────┐
+│             Presentation Layer          │
+│  (ViewModels, Compose UI, Platform UI)  │
+├─────────────────────────────────────────┤
+│             Domain Layer                │
+│     (Use Cases, Entities, Repository    │
+│         Interfaces, Validation)         │
+├─────────────────────────────────────────┤
+│              Data Layer                 │
+│   (Repository Implementations, DTOs,    │
+│      Network, Platform-specific)        │
+└─────────────────────────────────────────┘
+```
 
-### Architectural reactive approach
+### 🌐 Platform Support
 
-![Image Architectural reactive approach](/resources/clean_architecture_layers_details.png)
+- **Android**: OkHttp + Material Design
+- **iOS**: Darwin engine + Native iOS UI
+- **Desktop**: OkHttp + Compose Desktop
+- **Web**: JS engine + Compose Web
+- **WASM**: JS engine + Compose WASM
 
 ## Commands
 
