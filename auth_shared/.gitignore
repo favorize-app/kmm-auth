@@ -1,0 +1,3 @@
+/build
+!/build/XCFrameworks/release
+*.properties

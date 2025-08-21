@@ -1,0 +1,19 @@
+include:
+  - project: "kotlin-multiplatform-mobile/build-template"
+    ref: main
+    file: "/workflow.yml"
+
+before_script:
+  - !reference [.default, before_script]
+  - echo fb_app_id_store="\"$FB_APP_ID\"" >> local.properties
+  - echo fb_client_token_store="\"$FB_CLIENT_TOKEN\"" >> local.properties
+  - echo onesignal_app_id_store="\"$ONESIGNAL_APP_ID\"" >> local.properties
+  - echo google_web_client_id_store="\"$GOOGLE_WEB_CLIENT_ID\"" >> local.properties
+  - echo auth_server_store="\"$AUTH_SERVER_STORE\"" >> local.properties
+  - cd example_android && echo $GOOGLE_SERVICES_JSON | base64 --decode > google-services.json && cd ..
+
+distribute-firebase:
+  extends: .distribute-firebase
+
+tag-release:
+  extends: .tag-release

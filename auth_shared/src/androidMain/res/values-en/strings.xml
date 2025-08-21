@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_password_format">Your password must be minimum 8 characters long, has at least one uppercase, one lowercase, one number, one special character and not contains space.</string>
+    <string name="error_password_confirm">Your password confirmation is incorrect</string>
+
+    <!-- Sign In -->
+    <string name="signin_title_email">Sign in with your credentials</string>
+    <string name="signin_title_phone">Sign in with your phone number</string>
+    <string name="signin_subtitle">You can sign in or sign up for full access all feature.</string>
+    <string name="signin_phone">Phone Number</string>
+    <string name="signin_phone_hint">e.g. 81312345678</string>
+    <string name="signin_email">Email Address</string>
+    <string name="signin_email_hint">e.g. john@example.org</string>
+    <string name="signin_email_error_empty">Email cannot be blank</string>
+    <string name="signin_email_error_format">Your email format is incorrect. Please use name@email.com format</string>
+    <string name="signin_password">Password</string>
+    <string name="signin_password_hint">Enter your password</string>
+    <string name="signin_forgot_password">Forgot Password</string>
+    <string name="signin_dont_have_account">Don\'t have an account?</string>
+    <string name="signin_register">Register now</string>
+    <string name="signin_btn_fingerprint">Sign In with Fingerprint</string>
+    <string name="signin_call_cs_sure">Are you sure to contact customer service?</string>
+    <string name="signin_call_cs_yes">Call</string>
+    <string name="signin_call_cs_no">Cancel</string>
+    <string name="signin_finger_title">Authentication</string>
+    <string name="signin_finger_description">Please login to continue</string>
+    <string name="signin_finger_use_app_password">Use app password</string>
+    <string name="signin_welcome_back">Welcome back %1$s</string>
+    <string name="signin_continue">Continue</string>
+    <string name="signin_or">Or</string>
+    <string name="signin_google_error">Failed login with Google</string>
+    <string name="signin_facebook_error">Failed login with facebook</string>
+
+    <!-- Otp Dialog -->
+    <string name="otp_title">OTP Verification</string>
+    <string name="otp_sub_title">Enter the OTP that has been sent</string>
+    <string name="otp_to_phone">to number</string>
+    <string name="otp_valid_until">Valid until</string>
+    <string name="otp_resend">Re-send OTP</string>
+    <string name="otp_please_wait">Please wait for resend OTP</string>
+    <string name="otp_submit">Submit</string>
+
+    <!-- Forget Password Dialog -->
+    <string name="forget_password_title">Forget Password</string>
+    <string name="forget_password_sub_title">Enter your registered email</string>
+
+    <!-- Register -->
+    <string name="register_title">Complete Profile</string>
+    <string name="register_add_avatar">Add Profile Photo</string>
+    <string name="register_name">Name *</string>
+    <string name="register_name_hint">Fill your name</string>
+    <string name="register_bio">Bio *</string>
+    <string name="register_bio_hint">Fill your bio</string>
+    <string name="register_email">Email *</string>
+    <string name="register_email_hint">e.g. john@example.org</string>
+    <string name="register_phone">Phone Number *</string>
+    <string name="register_phone_hint">e.g. 81312345678</string>
+    <string name="register_password">Password</string>
+    <string name="register_password_hint">Enter your password</string>
+    <string name="register_password_confirm">Confirm Password</string>
+    <string name="register_password_confirm_hint">Confirm your password</string>
+    <string name="register_continue">Continue</string>
+
+    <!-- Sign Out Dialog -->
+    <string name="signout_title">Sign Out</string>
+    <string name="signout_sub_title">Are you sure to sign out from this application?</string>
+    <string name="signout_yes">Yes</string>
+    <string name="signout_no">Cancel</string>
+</resources>

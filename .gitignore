@@ -1,0 +1,64 @@
+# IDE files
+*.iml
+.idea/
+
+# Gradle
+.gradle
+/build
+/captures
+.externalNativeBuild
+.cxx
+
+# Properties and configuration
+/local.properties
+local.properties
+properties.gradle
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Security - NEVER commit these files!
+google-services.json
+GoogleService-Info.plist
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+secrets/
+secrets.properties
+.env
+.env.local
+.env.production
+
+# Firebase
+firebase.json
+.firebaserc
+firestore.indexes.json
+firestore.rules
+
+# Android
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# iOS
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/

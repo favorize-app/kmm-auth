@@ -1,0 +1,28 @@
+#!/bin/sh
+# Pre-commit hook to test compilation before committing
+
+echo "Running pre-commit compilation tests..."
+
+# Test basic compilation
+./gradlew :auth_shared:compileKotlinMetadata --quiet
+if [ $? -ne 0 ]; then
+    echo "❌ Metadata compilation failed"
+    exit 1
+fi
+
+# Test Android compilation
+./gradlew :auth_shared:compileDebugKotlinAndroid --quiet
+if [ $? -ne 0 ]; then
+    echo "❌ Android compilation failed"
+    exit 1
+fi
+
+# Test iOS compilation
+./gradlew :auth_shared:compileKotlinIosArm64 --quiet
+if [ $? -ne 0 ]; then
+    echo "❌ iOS compilation failed"
+    exit 1
+fi
+
+echo "✅ All compilation tests passed"
+exit 0

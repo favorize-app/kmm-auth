@@ -1,0 +1,61 @@
+[versions]
+agp = "8.11.1"
+junit = "4.13.2"
+kotlin = "2.2.10"
+navigation = "2.8.5"
+sonarqube = "5.1.0.4882"
+kover = "0.9.0"
+kmm-core = "1.5.1"
+dokka = "1.9.20"
+biometric = "1.2.0-alpha05"
+gms-auth = "21.2.0"
+fb = "17.0.0"
+onesignal = "5.1.21"
+spotless = "7.0.0"
+coroutines = "1.10.2"
+ktor = "3.2.2"
+#noinspection GradleDependency
+mockk = "1.12.5"
+
+[libraries]
+junit = { module = "junit:junit", version.ref = "junit" }
+kmm-core = { module = "multi.platform.core:core_shared", version.ref = "kmm-core" }
+biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+gms-auth = { module = "com.google.android.gms:play-services-auth", version.ref = "gms-auth" }
+fb = { module = "com.facebook.android:facebook-android-sdk", version.ref = "fb" }
+onesignal = { module = "com.onesignal:OneSignal", version.ref = "onesignal" }
+# Firebase dependencies removed - library is Firebase-free
+# firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase" }
+# firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+# firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
+# firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+mockk-common = { module = "io.mockk:mockk-common", version.ref = "mockk" }
+
+# Ktor client dependencies for HTTP networking
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+
+# Kotlinx serialization
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+# Firebase plugins removed - library is Firebase-free
+# gms = { id = "com.google.gms.google-services", version.ref = "gms" }
+# crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+

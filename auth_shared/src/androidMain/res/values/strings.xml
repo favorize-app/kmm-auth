@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_password_format">Kata sandi anda minimal 8 karakter, setidaknya memiliki satu huruf besar, satu huruf kecil, satu angka, satu simbol dan tidak boleh ada spasi.</string>
+    <string name="error_password_confirm">Konfirmasi kata sandi anda salah</string>
+
+    <!-- Sign In -->
+    <string name="signin_title_email">Masukkan kredensial kamu</string>
+    <string name="signin_title_phone">Masukkan nomor HP kamu</string>
+    <string name="signin_subtitle">Kamu bisa masuk atau daftar akun untuk akses seluruh fitur.</string>
+    <string name="signin_phone">Nomor HP</string>
+    <string name="signin_phone_hint">contoh: 81312345678</string>
+    <string name="signin_email">Alamat Email</string>
+    <string name="signin_email_hint">contoh: john@example.org</string>
+    <string name="signin_email_error_empty">Email tidak boleh kosong</string>
+    <string name="signin_email_error_format">Format email Anda salah. Gunakan format: nama@email.com</string>
+    <string name="signin_password">Kata Sandi</string>
+    <string name="signin_password_hint">Tulis kata sandi kamu</string>
+    <string name="signin_forgot_password">Lupa Sandi?</string>
+    <string name="signin_dont_have_account">Belum punya akun?</string>
+    <string name="signin_register">Daftar sekarang</string>
+    <string name="signin_btn_fingerprint">Masuk dengan Fingerprint</string>
+    <string name="signin_call_cs_sure">Lanjutkan untuk menghubungi layanan pelanggan?</string>
+    <string name="signin_call_cs_yes">Hubungi</string>
+    <string name="signin_call_cs_no">Batal</string>
+    <string name="signin_finger_title">Autentikasi</string>
+    <string name="signin_finger_description">Silahkan login untuk melanjutkan</string>
+    <string name="signin_finger_use_app_password">Gunakan password</string>
+    <string name="signin_welcome_back">Selamat datang kembali %1$s</string>
+    <string name="signin_continue">Lanjutkan</string>
+    <string name="signin_or">Atau</string>
+    <string name="signin_google_error">Gagal login menggunakan Google</string>
+    <string name="signin_facebook_error">Gagal login menggunakan facebook</string>
+
+    <!-- Otp Dialog -->
+    <string name="otp_title">Verifikasi OTP</string>
+    <string name="otp_sub_title">Masukan OTP yang telah dikirimkan</string>
+    <string name="otp_to_phone">ke nomor</string>
+    <string name="otp_valid_until">Berlaku hingga</string>
+    <string name="otp_resend">Kirim ulang kode OTP</string>
+    <string name="otp_please_wait">Mohon menunggu untuk kirim ulang OTP</string>
+    <string name="otp_submit">Kirim</string>
+
+    <!-- Forget Password Dialog -->
+    <string name="forget_password_title">Lupa Sandi</string>
+    <string name="forget_password_sub_title">Masukan email terdaftar anda</string>
+
+    <!-- Register -->
+    <string name="register_title">Lengkapi Profile</string>
+    <string name="register_add_avatar">Tambah Foto Profil</string>
+    <string name="register_name">Nama *</string>
+    <string name="register_name_hint">Tulis nama kamu</string>
+    <string name="register_bio">Bio *</string>
+    <string name="register_bio_hint">Tulis bio tentang kamu</string>
+    <string name="register_email">Email *</string>
+    <string name="register_email_hint">contoh: john@example.org</string>
+    <string name="register_phone">Nomor HP *</string>
+    <string name="register_phone_hint">contoh: 81312345678</string>
+    <string name="register_password">Kata Sandi *</string>
+    <string name="register_password_hint">Tulis kata sandi kamu</string>
+    <string name="register_password_confirm">Ulangi Kata Sandi *</string>
+    <string name="register_password_confirm_hint">Ulangi kata sandi kamu</string>
+    <string name="register_continue">Lanjutkan</string>
+
+    <!-- SignOut Dialog -->
+    <string name="signout_title">Keluar</string>
+    <string name="signout_sub_title">Apakah kamu yakin ingin keluar dari aplikasi ini?</string>
+    <string name="signout_yes">Ya</string>
+    <string name="signout_no">Tidak</string>
+    
+    <!-- Navigation Routes -->
+    <string name="route_auth_sign_in">auth_sign_in</string>
+    <string name="route_auth_otp">auth_otp</string>
+    <string name="route_auth_forget_password">auth_forget_password</string>
+    <string name="route_auth_register">auth_register</string>
+    <string name="route_auth_sign_out">auth_sign_out</string>
+    <string name="route_auth_error_connection">auth_error_connection</string>
+</resources>

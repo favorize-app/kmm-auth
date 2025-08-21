@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="multi.platform.auth.shared.app.signin.SignInViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_phone"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/signin_phone"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_country"
+            style="@style/ThemeOverlay.Material3.TextInputEditText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="24dp"
+            android:clickable="false"
+            android:drawablePadding="8dp"
+            android:focusable="false"
+            android:importantForAutofill="no"
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:text="@={vm.country}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtv_phone" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone"
+            style="@style/ThemeOverlay.Material3.TextInputEditText"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:digits="1234567890"
+            android:hint="@string/signin_phone_hint"
+            android:importantForAutofill="no"
+            android:inputType="phone"
+            android:lines="1"
+            android:text="@={vm.phone}"
+            app:layout_constraintLeft_toRightOf="@id/et_country"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtv_phone" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/mtv_phone_error"
+            style="@style/TextAppearance.MaterialComponents.Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{vm.phoneError != null ? vm.phoneError : ``}"
+            android:textColor="?attr/errorColor"
+            android:visibility="@{vm.phoneError != null ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/ThemeOverlay.Material3.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:enabled="@{vm.phone != null &amp;&amp; vm.phone.trim().isEmpty() == false &amp;&amp; vm.phoneError == null}"
+            android:onClick="@{()->vm.signInPhone()}"
+            android:text="@string/signin_continue"
+            app:cornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mtv_phone_error" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
