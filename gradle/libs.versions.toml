@@ -14,6 +14,7 @@ onesignal = "5.1.21"
 spotless = "7.0.0"
 coroutines = "1.10.2"
 ktor = "3.2.2"
+compose = "1.6.0"
 #noinspection GradleDependency
 mockk = "1.12.5"
 
@@ -54,6 +55,7 @@ navigation = { id = "androidx.navigation.safeargs", version.ref = "navigation" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+compose = { id = "org.jetbrains.compose", version.ref = "compose" }
 # Firebase plugins removed - library is Firebase-free
 # gms = { id = "com.google.gms.google-services", version.ref = "gms" }
 # crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
