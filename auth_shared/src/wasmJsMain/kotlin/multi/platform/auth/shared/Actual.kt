@@ -34,7 +34,6 @@ actual fun authModule() = module {
     singleOf(::SignOutUseCase)
 
     // ViewModels - factory instances for web state management
-    // Web applications can create multiple instances as needed
     factoryOf(::OtpViewModel)
     factoryOf(::SignInViewModel)
     factoryOf(::SignOutViewModel)
