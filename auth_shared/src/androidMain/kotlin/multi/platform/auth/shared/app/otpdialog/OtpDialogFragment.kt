@@ -24,29 +24,47 @@ import multi.platform.auth.shared.R
 import multi.platform.auth.shared.databinding.OtpDialogFragmentBinding
 import multi.platform.auth.shared.domain.auth.entity.Ticket
 import multi.platform.auth.shared.external.AuthConfig
+import multi.platform.auth.shared.external.ApiConfig
+import multi.platform.auth.shared.external.UiConfig
+import multi.platform.auth.shared.external.FeatureConfig
 import multi.platform.auth.shared.external.constants.AuthKey
-import multi.platform.core.shared.app.common.CoreDialogFragment
-import multi.platform.core.shared.external.constants.CommonKey
-import multi.platform.core.shared.external.extensions.goTo
-import multi.platform.core.shared.external.extensions.launchAndCollectIn
-import multi.platform.core.shared.external.extensions.showErrorSnackbar
-import multi.platform.core.shared.external.extensions.showKeyboard
-import multi.platform.core.shared.external.extensions.showToast
-import multi.platform.core.shared.external.utilities.Persistent
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.inject
-
-class OtpDialogFragment : CoreDialogFragment() {
-    private val persistent: Persistent by inject()
-    private val otpViewModel: OtpViewModel by viewModel()
-    private val authConfig: AuthConfig by inject()
+import androidx.fragment.app.DialogFragment
+import multi.platform.auth.shared.utils.CommonKey
+import multi.platform.auth.shared.utils.goTo
+import multi.platform.auth.shared.utils.launchAndCollectIn
+import multi.platform.auth.shared.utils.showErrorSnackbar
+import multi.platform.auth.shared.utils.showKeyboard
+import multi.platform.auth.shared.utils.showToast
+import multi.platform.auth.shared.utils.Persistent
+class OtpDialogFragment : DialogFragment() {
+    private lateinit var persistent: Persistent
+    private lateinit var otpViewModel: OtpViewModel
+    private lateinit var authConfig: AuthConfig
 
     private var mCountDownTimer: CountDownTimer? = null
     private lateinit var binding: OtpDialogFragmentBinding
 
-    override fun isCancelable() = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isCancelable = false
+        
+        // Initialize dependencies
+        persistent = Persistent(requireContext())
+        otpViewModel = OtpViewModel()
+        authConfig = object : AuthConfig {
+            override val api = object : ApiConfig {
+                override val baseUrl = "https://api.example.com"
+                override val timeout = 30000L
+            }
+            override val ui = object : UiConfig {
+                override val primaryColor = "#000000"
+                override val logo = "logo"
+            }
+            override val features = object : FeatureConfig {
+                override val enableBiometric = false
+                override val enableSocialLogin = false
+            }
+        }
         setFragmentResultListener(CommonKey.RETRY_KEY) { _, b ->
             if (b.getString(CommonKey.RETRY_KEY, "") == AuthKey.OTP_KEY) {
                 Handler(Looper.getMainLooper()).postDelayed({ submit() }, 300)

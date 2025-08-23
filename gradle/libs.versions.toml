@@ -17,6 +17,17 @@ ktor = "3.2.2"
 compose = "1.6.0"
 #noinspection GradleDependency
 mockk = "1.12.5"
+androidx-core = "1.12.0"
+androidx-fragment = "1.6.2"
+androidx-constraintlayout = "2.1.4"
+androidx-appcompat = "1.6.1"
+androidx-activity = "1.8.2"
+androidx-lifecycle = "2.7.0"
+androidx-navigation = "2.7.6"
+material = "1.11.0"
+timber = "5.0.1"
+
+
 
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -45,6 +56,22 @@ ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 
 # Kotlinx serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version = "1.9.0" }
+
+# AndroidX dependencies
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
+androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
+androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
