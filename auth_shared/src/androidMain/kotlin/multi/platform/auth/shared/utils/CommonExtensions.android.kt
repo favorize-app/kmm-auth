@@ -73,6 +73,18 @@ fun Fragment.dismiss() {
 }
 
 /**
+ * Additional missing extension functions.
+ */
+fun Fragment.arguments(): android.os.Bundle? {
+    return arguments
+}
+
+fun Fragment.viewLifecycleOwner(): androidx.lifecycle.LifecycleOwner {
+    // This will be implemented by the consuming app
+    throw NotImplementedError("This should be implemented by the consuming app")
+}
+
+/**
  * Android-specific extension functions for ViewModels.
  */
 fun androidx.lifecycle.ViewModel.viewLifecycleOwner(): androidx.lifecycle.LifecycleOwner {
@@ -89,6 +101,17 @@ fun <T> Flow<T>.launchAndCollectIn(
 ) {
     // This will be implemented by the consuming app
     // For now, we provide a stub implementation
+}
+
+/**
+ * Extension function for launchAndCollectIn that matches fragment usage patterns.
+ */
+fun <T> Any.launchAndCollectIn(
+    scope: Any,
+    action: suspend (T) -> Unit
+): T? {
+    // This will be implemented by the consuming app
+    return null
 }
 
 /**

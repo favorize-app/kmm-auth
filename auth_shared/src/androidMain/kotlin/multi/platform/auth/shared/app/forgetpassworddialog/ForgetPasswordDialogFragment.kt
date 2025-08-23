@@ -15,26 +15,48 @@ import androidx.lifecycle.Lifecycle
 import multi.platform.auth.shared.R
 import multi.platform.auth.shared.databinding.ForgetPasswordDialogFragmentBinding
 import multi.platform.auth.shared.external.AuthConfig
+import multi.platform.auth.shared.external.ApiConfig
+import multi.platform.auth.shared.external.UiConfig
+import multi.platform.auth.shared.external.FeatureConfig
 import multi.platform.auth.shared.external.constants.AuthKey
-import multi.platform.core.shared.app.common.CoreDialogFragment
-import multi.platform.core.shared.external.constants.CommonKey
-import multi.platform.core.shared.external.extensions.goTo
-import multi.platform.core.shared.external.extensions.launchAndCollectIn
-import multi.platform.core.shared.external.extensions.showErrorSnackbar
-import multi.platform.core.shared.external.utilities.Persistent
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.inject
+import multi.platform.auth.shared.domain.auth.usecase.ForgetPasswordUseCase
+import androidx.fragment.app.DialogFragment
+import multi.platform.auth.shared.utils.CommonKey
+import multi.platform.auth.shared.utils.goTo
+import multi.platform.auth.shared.utils.launchAndCollectIn
+import multi.platform.auth.shared.utils.showErrorSnackbar
+import multi.platform.auth.shared.utils.Persistent
 
-class ForgetPasswordDialogFragment : CoreDialogFragment() {
-    private val forgetPasswordViewModel: ForgetPasswordViewModel by viewModel()
-    private val persistent: Persistent by inject()
-    private val authConfig: AuthConfig by inject()
+class ForgetPasswordDialogFragment : DialogFragment() {
+    private lateinit var forgetPasswordViewModel: ForgetPasswordViewModel
+    private lateinit var persistent: Persistent
+    private lateinit var authConfig: AuthConfig
 
     private lateinit var binding: ForgetPasswordDialogFragmentBinding
 
-    override fun isCancelable() = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        isCancelable = false
+        
+        // Initialize dependencies
+        forgetPasswordViewModel = ForgetPasswordViewModel(object : ForgetPasswordUseCase {
+            override suspend fun invoke(email: String): String = "stub"
+        })
+        persistent = Persistent(requireContext())
+        authConfig = object : AuthConfig {
+            override val api = object : ApiConfig {
+                override val baseUrl = "https://api.example.com"
+                override val timeout = 30000L
+            }
+            override val ui = object : UiConfig {
+                override val primaryColor = "#000000"
+                override val logo = "logo"
+            }
+            override val features = object : FeatureConfig {
+                override val enableBiometric = false
+                override val enableSocialLogin = false
+            }
+        }
         setFragmentResultListener(CommonKey.RETRY_KEY) { _, b ->
             if (b.getString(CommonKey.RETRY_KEY, "") == AuthKey.FORGET_PASSWORD_KEY) {
                 Handler(Looper.getMainLooper()).postDelayed(
