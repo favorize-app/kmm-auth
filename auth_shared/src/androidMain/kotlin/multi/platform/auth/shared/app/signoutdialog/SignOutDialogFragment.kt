@@ -23,13 +23,12 @@ import multi.platform.auth.shared.utils.goTo
 import multi.platform.auth.shared.utils.launchAndCollectIn
 import multi.platform.auth.shared.utils.showErrorSnackbar
 import multi.platform.auth.shared.utils.Persistent
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.inject
+
 
 class SignOutDialogFragment : DialogFragment() {
-    private val signOutViewModel: SignOutViewModel by viewModel()
-    private val persistent: Persistent by inject()
-    private val authConfig: AuthConfig by inject()
+    private val signOutViewModel: SignOutViewModel = SignOutViewModel()
+    private val persistent: Persistent = Persistent(requireContext())
+    private val authConfig: AuthConfig = AuthConfig()
 
     private lateinit var binding: SignoutDialogFragmentBinding
 

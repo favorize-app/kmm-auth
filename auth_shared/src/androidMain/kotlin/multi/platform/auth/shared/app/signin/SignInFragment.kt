@@ -48,16 +48,15 @@ import multi.platform.auth.shared.utils.launchAndCollectIn
 import multi.platform.auth.shared.utils.showErrorSnackbar
 import multi.platform.auth.shared.utils.showToast
 import multi.platform.auth.shared.utils.Persistent
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.component.inject
+
 import java.util.UUID
 import multi.platform.core.shared.R as cR
 
 class SignInFragment : Fragment() {
 
     private val minChar = 9
-    private val authConfig: AuthConfig by inject()
-    private val signInViewModel: SignInViewModel by viewModel()
+    private val authConfig: AuthConfig = AuthConfig()
+    private val signInViewModel: SignInViewModel = SignInViewModel()
     private val persistent: Persistent by lazy { Persistent(requireContext()) }
     private lateinit var binding: SigninFragmentBinding
     private val callbackManager: CallbackManager by lazy {

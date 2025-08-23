@@ -28,6 +28,7 @@ material = "1.11.0"
 timber = "5.0.1"
 
 
+
 [libraries]
 junit = { module = "junit:junit", version.ref = "junit" }
 kmm-core = { module = "multi.platform.core:core_shared", version.ref = "kmm-core" }
@@ -69,6 +70,7 @@ androidx-navigation-fragment = { module = "androidx.navigation:navigation-fragme
 androidx-navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+
 
 
 [plugins]
