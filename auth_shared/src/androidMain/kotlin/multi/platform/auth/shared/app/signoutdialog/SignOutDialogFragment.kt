@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
@@ -17,16 +18,15 @@ import multi.platform.auth.shared.R
 import multi.platform.auth.shared.databinding.SignoutDialogFragmentBinding
 import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.constants.AuthKey
-import multi.platform.core.shared.app.common.CoreDialogFragment
-import multi.platform.core.shared.external.constants.CommonKey
-import multi.platform.core.shared.external.extensions.goTo
-import multi.platform.core.shared.external.extensions.launchAndCollectIn
-import multi.platform.core.shared.external.extensions.showErrorSnackbar
-import multi.platform.core.shared.external.utilities.Persistent
+import multi.platform.auth.shared.utils.CommonKey
+import multi.platform.auth.shared.utils.goTo
+import multi.platform.auth.shared.utils.launchAndCollectIn
+import multi.platform.auth.shared.utils.showErrorSnackbar
+import multi.platform.auth.shared.utils.Persistent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 
-class SignOutDialogFragment : CoreDialogFragment() {
+class SignOutDialogFragment : DialogFragment() {
     private val signOutViewModel: SignOutViewModel by viewModel()
     private val persistent: Persistent by inject()
     private val authConfig: AuthConfig by inject()

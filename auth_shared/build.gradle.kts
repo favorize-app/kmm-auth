@@ -141,6 +141,22 @@ kotlin {
                 
                 // HTTP client implementation for Android
                 implementation(libs.ktor.client.okhttp)
+                
+                // Core Android dependencies
+                implementation(libs.androidx.core)
+                implementation(libs.androidx.fragment)
+                implementation(libs.androidx.constraintlayout)
+                implementation(libs.androidx.appcompat)
+                implementation(libs.androidx.activity)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.livedata)
+                implementation(libs.androidx.lifecycle.runtime)
+                implementation(libs.androidx.navigation.fragment)
+                implementation(libs.androidx.navigation.ui)
+                implementation(libs.material)
+                implementation(libs.timber)
+                
+
             }
             resources.srcDir("./res")
         }

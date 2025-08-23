@@ -91,4 +91,23 @@ object ValidationUtils {
             false
         }
     }
+    
+    /**
+     * Validates minimum character length.
+     */
+    fun validateMinChar(
+        value: MutableStateFlow<String?>,
+        error: MutableStateFlow<String?>,
+        minLength: Int,
+        fieldName: String = "This field"
+    ): Boolean {
+        return if (value.value?.length ?: 0 < minLength) {
+            error.value = "$fieldName must be at least $minLength characters"
+            true
+        } else {
+            error.value = null
+            false
+        }
+    }
+    
 }

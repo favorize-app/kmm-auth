@@ -41,24 +41,24 @@ import multi.platform.auth.shared.external.AuthConfig
 import multi.platform.auth.shared.external.constants.AuthKey
 import multi.platform.auth.shared.external.enums.AuthType
 import multi.platform.auth.shared.external.utilities.BiometricUtil
-import multi.platform.core.shared.app.common.CoreFragment
-import multi.platform.core.shared.external.constants.CommonKey
-import multi.platform.core.shared.external.extensions.goTo
-import multi.platform.core.shared.external.extensions.launchAndCollectIn
-import multi.platform.core.shared.external.extensions.showErrorSnackbar
-import multi.platform.core.shared.external.extensions.showToast
-import multi.platform.core.shared.external.utilities.Persistent
+import androidx.fragment.app.Fragment
+import multi.platform.auth.shared.utils.CommonKey
+import multi.platform.auth.shared.utils.goTo
+import multi.platform.auth.shared.utils.launchAndCollectIn
+import multi.platform.auth.shared.utils.showErrorSnackbar
+import multi.platform.auth.shared.utils.showToast
+import multi.platform.auth.shared.utils.Persistent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.inject
 import java.util.UUID
 import multi.platform.core.shared.R as cR
 
-class SignInFragment : CoreFragment() {
+class SignInFragment : Fragment() {
 
     private val minChar = 9
     private val authConfig: AuthConfig by inject()
     private val signInViewModel: SignInViewModel by viewModel()
-    private val persistent: Persistent by inject()
+    private val persistent: Persistent by lazy { Persistent(requireContext()) }
     private lateinit var binding: SigninFragmentBinding
     private val callbackManager: CallbackManager by lazy {
         CallbackManager.Factory.create()
